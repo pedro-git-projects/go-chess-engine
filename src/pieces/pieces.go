@@ -6,9 +6,9 @@ import "github.com/pedro-git-projects/go-chess/src/utils"
 // Piece is an interface with the restrictions a chess piece
 // must satisfy
 type Piece interface {
-	Move(to utils.Pair[string, int])
+	Move(to utils.Coordinate)
 	Color() Color
-	Position() utils.Pair[string, int]
-	LegalMoves() []utils.Pair[string, int]
+	Position() utils.Coordinate
+	LegalMoves() []utils.Coordinate
 	CalculateLegalMoves()
 }
