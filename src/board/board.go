@@ -13,7 +13,7 @@ func NewBoard() *Board {
 
 	for i := 0; i < 8; i++ {
 		for j := 0; j < 8; j++ {
-			matrix[i][j] = utils.NewPair(clc.GetCurrent(), row)
+			matrix[i][j] = utils.NewPair(clc.CurrentValue(), row)
 			clc.Next()
 		}
 		row--
