@@ -44,6 +44,25 @@ func TestFilterByCol(t *testing.T) {
 	}
 }
 
+func TestFilterByRow(t *testing.T) {
+	board := board.New()
+	got := board.FilterByRow(1)
+	expect := []utils.Coordinate{
+		utils.NewCoordinate("a", 1),
+		utils.NewCoordinate("b", 1),
+		utils.NewCoordinate("c", 1),
+		utils.NewCoordinate("d", 1),
+		utils.NewCoordinate("e", 1),
+		utils.NewCoordinate("f", 1),
+		utils.NewCoordinate("g", 1),
+		utils.NewCoordinate("h", 1),
+	}
+
+	if !reflect.DeepEqual(got, expect) {
+		t.Errorf("expected %v but got %v", expect, got)
+	}
+}
+
 func TestFowardRightDiagonal(t *testing.T) {
 	board := board.New()
 	got := board.FowardRightDiagonal(utils.NewCoordinate("d", 1))
@@ -98,5 +117,35 @@ func TestBackwardRightDiagonal(t *testing.T) {
 
 	if !reflect.DeepEqual(got, expect) {
 		t.Errorf("expected %v but got %v", expect, got)
+	}
+}
+
+func TestFirstFoward(t *testing.T) {
+	board := board.New()
+	got, ok := board.FirstFoward(utils.NewCoordinate("e", 4))
+	expect := utils.NewCoordinate("e", 5)
+
+	if !reflect.DeepEqual(got, expect) || !ok {
+		t.Errorf("expected %v but got %v", expect, got)
+	}
+
+	got, ok = board.FirstFoward(utils.NewCoordinate("e", 8))
+	if ok {
+		t.Errorf("expected %t but got %t", true, ok)
+	}
+}
+
+func TestNFoward(t *testing.T) {
+	board := board.New()
+	got, ok := board.NFoward(utils.NewCoordinate("e", 4), 4)
+	expect := utils.NewCoordinate("e", 8)
+
+	if !reflect.DeepEqual(got, expect) || !ok {
+		t.Errorf("expected %v but got %v", expect, got)
+	}
+
+	got, ok = board.NFoward(utils.NewCoordinate("e", 4), 5)
+	if ok {
+		t.Errorf("expected %t but got %t", true, ok)
 	}
 }
