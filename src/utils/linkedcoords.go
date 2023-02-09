@@ -1,12 +1,10 @@
 package utils
 
-import (
-	"errors"
-)
+import "errors"
 
 // CircularLinkedCoords represents a circular linked list
 // of chess coordinate letters
-type CircularLinkedCoords struct {
+type LinkedCoords struct {
 	current *Node
 	a       *Node
 	b       *Node
@@ -20,7 +18,7 @@ type CircularLinkedCoords struct {
 
 // NewCircularCoordList creates a new circular linked list of chess
 // letter coordinates starting at the intial letter parameter
-func NewCircularCoordList(initial string) (*CircularLinkedCoords, error) {
+func NewCoordList(initial string) (*CircularLinkedCoords, error) {
 	clc := CircularLinkedCoords{
 		a: NewNode("a"),
 		b: NewNode("b"),
@@ -39,9 +37,9 @@ func NewCircularCoordList(initial string) (*CircularLinkedCoords, error) {
 	clc.e.next = clc.f
 	clc.f.next = clc.g
 	clc.g.next = clc.h
-	clc.h.next = clc.a
+	clc.h.next = nil
 
-	clc.a.previous = clc.h
+	clc.a.previous = nil
 	clc.b.previous = clc.a
 	clc.c.previous = clc.b
 	clc.d.previous = clc.c
@@ -77,7 +75,7 @@ func NewCircularCoordList(initial string) (*CircularLinkedCoords, error) {
 
 // CurrentValue is an accessor for the current string value
 // on the list
-func (c CircularLinkedCoords) CurrentValue() string {
+func (c LinkedCoords) CurrentValue() string {
 	switch c.current {
 	case c.a:
 		return "a"
@@ -100,11 +98,11 @@ func (c CircularLinkedCoords) CurrentValue() string {
 }
 
 // Next moves the current to the next node
-func (c *CircularLinkedCoords) MoveToNext() {
+func (c *LinkedCoords) MoveToNext() {
 	c.current = c.current.next
 }
 
 // Next moves the current to the next node
-func (c *CircularLinkedCoords) MoveToPrev() {
+func (c *LinkedCoords) MoveToPrev() {
 	c.current = c.current.previous
 }
