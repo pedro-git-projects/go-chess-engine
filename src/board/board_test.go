@@ -58,3 +58,45 @@ func TestFowardRightDiagonal(t *testing.T) {
 		t.Errorf("expected %v but got %v", expect, got)
 	}
 }
+
+func TestFowardLeftDiagonal(t *testing.T) {
+	board := board.New()
+	got := board.FowardLeftDiagonal(utils.NewCoordinate("f", 5))
+	expect := []utils.Coordinate{
+		utils.NewCoordinate("e", 6),
+		utils.NewCoordinate("d", 7),
+		utils.NewCoordinate("c", 8),
+	}
+
+	if !reflect.DeepEqual(got, expect) {
+		t.Errorf("expected %v but got %v", expect, got)
+	}
+}
+
+func TestBackwardLeftDiagonal(t *testing.T) {
+	board := board.New()
+	got := board.BackwardLeftDiagonal(utils.NewCoordinate("e", 4))
+	expect := []utils.Coordinate{
+		utils.NewCoordinate("d", 3),
+		utils.NewCoordinate("c", 2),
+		utils.NewCoordinate("b", 1),
+	}
+
+	if !reflect.DeepEqual(got, expect) {
+		t.Errorf("expected %v but got %v", expect, got)
+	}
+}
+
+func TestBackwardRightDiagonal(t *testing.T) {
+	board := board.New()
+	got := board.BackwardRightDiagonal(utils.NewCoordinate("e", 4))
+	expect := []utils.Coordinate{
+		utils.NewCoordinate("f", 3),
+		utils.NewCoordinate("g", 2),
+		utils.NewCoordinate("h", 1),
+	}
+
+	if !reflect.DeepEqual(got, expect) {
+		t.Errorf("expected %v but got %v", expect, got)
+	}
+}

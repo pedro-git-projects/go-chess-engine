@@ -83,3 +83,57 @@ func (b Board) FowardRightDiagonal(position utils.Coordinate) []utils.Coordinate
 
 	return result
 }
+
+func (b Board) FowardLeftDiagonal(position utils.Coordinate) []utils.Coordinate {
+	result := make([]utils.Coordinate, 0)
+
+	y, _ := utils.NewCoordList(position.First)
+	y.MoveToPrev()
+	x := position.Second + 1
+	nextDiagonal := utils.NewCoordinate(y.CurrentValue(), x)
+
+	for b.Find(nextDiagonal) {
+		result = append(result, nextDiagonal)
+		x++
+		y.MoveToPrev()
+		nextDiagonal = utils.NewCoordinate(y.CurrentValue(), x)
+	}
+
+	return result
+}
+
+func (b Board) BackwardLeftDiagonal(position utils.Coordinate) []utils.Coordinate {
+	result := make([]utils.Coordinate, 0)
+
+	y, _ := utils.NewCoordList(position.First)
+	y.MoveToPrev()
+	x := position.Second - 1
+	nextDiagonal := utils.NewCoordinate(y.CurrentValue(), x)
+
+	for b.Find(nextDiagonal) {
+		result = append(result, nextDiagonal)
+		x--
+		y.MoveToPrev()
+		nextDiagonal = utils.NewCoordinate(y.CurrentValue(), x)
+	}
+
+	return result
+}
+
+func (b Board) BackwardRightDiagonal(position utils.Coordinate) []utils.Coordinate {
+	result := make([]utils.Coordinate, 0)
+
+	y, _ := utils.NewCoordList(position.First)
+	y.MoveToNext()
+	x := position.Second - 1
+	nextDiagonal := utils.NewCoordinate(y.CurrentValue(), x)
+
+	for b.Find(nextDiagonal) {
+		result = append(result, nextDiagonal)
+		x--
+		y.MoveToNext()
+		nextDiagonal = utils.NewCoordinate(y.CurrentValue(), x)
+	}
+
+	return result
+}
