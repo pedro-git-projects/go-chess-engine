@@ -1,12 +1,18 @@
 package board
 
-import "github.com/pedro-git-projects/go-chess/src/utils"
+import (
+	"github.com/pedro-git-projects/go-chess/src/pieces"
+	"github.com/pedro-git-projects/go-chess/src/utils"
+)
 
+// Board represents the a chessboard
 type Board struct {
-	CoordinateMatrix [8][8]utils.Pair[string, int]
+	coordinateMatrix [8][8]utils.Pair[string, int]
+	state            map[utils.Pair[string, int]]pieces.Piece
 }
 
-func NewBoard() *Board {
+// New returns a pointer to a board
+func New() *Board {
 	var matrix [8][8]utils.Pair[string, int]
 	clc, _ := utils.NewCircularCoordList("a")
 	row := 8
@@ -20,7 +26,12 @@ func NewBoard() *Board {
 	}
 
 	b := Board{
-		CoordinateMatrix: matrix,
+		coordinateMatrix: matrix,
 	}
 	return &b
+}
+
+// Matrix is an accessor for the board matrix
+func (b Board) Matrix() [8][8]utils.Pair[string, int] {
+	return b.coordinateMatrix
 }

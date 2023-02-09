@@ -7,10 +7,10 @@ import (
 )
 
 func main() {
-	board := board.NewBoard()
-	for i := 0; i < len(board.CoordinateMatrix); i++ {
-		for j := 0; j < len(board.CoordinateMatrix); j++ {
-			fmt.Printf("[%s%d]", board.CoordinateMatrix[i][j].First, board.CoordinateMatrix[i][j].Second)
+	board := board.New()
+	for i := 0; i < len(board.Matrix()); i++ {
+		for j := 0; j < len(board.Matrix()); j++ {
+			fmt.Printf("[%s%d]", board.Matrix()[i][j].First, board.Matrix()[i][j].Second)
 		}
 		println()
 	}
