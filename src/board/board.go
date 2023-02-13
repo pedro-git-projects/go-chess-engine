@@ -16,7 +16,7 @@ type Board struct {
 // New returns a pointer to a board
 func New() *Board {
 	var matrix [8][8]utils.Coordinate
-	clc, _ := utils.NewCircularCoordList("a")
+	clc, _ := utils.NewCircularCoordList('a')
 	row := 8
 
 	for i := 0; i < 8; i++ {
@@ -54,7 +54,7 @@ func (b Board) Find(c utils.Coordinate) bool {
 
 // FilterByCol returns the column corresponding
 // to the letter coordinate passed
-func (b Board) FilterByCol(col string) []utils.Coordinate {
+func (b Board) FilterByCol(col rune) []utils.Coordinate {
 	result := make([]utils.Coordinate, 0)
 	for i := 0; i < len(b.coordinateMatrix); i++ {
 		for j := 0; j < len(b.coordinateMatrix); j++ {
@@ -160,6 +160,7 @@ func (b Board) BackwardRightDiagonal(position utils.Coordinate) []utils.Coordina
 	return result
 }
 
+// TODO Change to slice
 // FirstFoward returns the next first position in front of the current one and ok if it succeeds
 // it returns an empty coordinate and not ok else
 func (b Board) FirstFoward(position utils.Coordinate) (foward utils.Coordinate, ok bool) {
@@ -178,4 +179,121 @@ func (b Board) NFoward(position utils.Coordinate, squares int) (foward utils.Coo
 		return utils.NewCoordinate(position.First, next), true
 	}
 	return utils.Coordinate{}, false
+}
+
+// FowardRightL returns a possibly empty slice of coodrinates
+func (b Board) FowardRightL(position utils.Coordinate) []utils.Coordinate {
+	result := make([]utils.Coordinate, 0)
+
+	y, _ := utils.NewCoordList(position.First)
+	y.MoveToNext()
+	x := position.Second + 2
+	nextL := utils.NewCoordinate(y.CurrentValue(), x)
+
+	if b.Find(nextL) {
+		result = append(result, nextL)
+	}
+	return result
+}
+
+func (b Board) FowardLeftL(position utils.Coordinate) []utils.Coordinate {
+	result := make([]utils.Coordinate, 0)
+
+	y, _ := utils.NewCoordList(position.First)
+	y.MoveToPrev()
+	x := position.Second + 2
+	nextL := utils.NewCoordinate(y.CurrentValue(), x)
+
+	if b.Find(nextL) {
+		result = append(result, nextL)
+	}
+	return result
+}
+
+func (b Board) BackwardRightL(position utils.Coordinate) []utils.Coordinate {
+	result := make([]utils.Coordinate, 0)
+
+	y, _ := utils.NewCoordList(position.First)
+	y.MoveToNext()
+	x := position.Second - 2
+	nextL := utils.NewCoordinate(y.CurrentValue(), x)
+
+	if b.Find(nextL) {
+		result = append(result, nextL)
+	}
+	return result
+}
+
+func (b Board) BackwardLeftL(position utils.Coordinate) []utils.Coordinate {
+	result := make([]utils.Coordinate, 0)
+
+	y, _ := utils.NewCoordList(position.First)
+	y.MoveToPrev()
+	x := position.Second - 2
+	nextL := utils.NewCoordinate(y.CurrentValue(), x)
+
+	if b.Find(nextL) {
+		result = append(result, nextL)
+	}
+	return result
+}
+
+func (b Board) RighDownLateralL(position utils.Coordinate) []utils.Coordinate {
+	result := make([]utils.Coordinate, 0)
+
+	y, _ := utils.NewCoordList(position.First)
+	y.MoveToNext()
+	y.MoveToNext()
+	x := position.Second - 1
+	nextL := utils.NewCoordinate(y.CurrentValue(), x)
+
+	if b.Find(nextL) {
+		result = append(result, nextL)
+	}
+	return result
+}
+
+func (b Board) LeftDownLateralL(position utils.Coordinate) []utils.Coordinate {
+	result := make([]utils.Coordinate, 0)
+
+	y, _ := utils.NewCoordList(position.First)
+	y.MoveToPrev()
+	y.MoveToPrev()
+	x := position.Second - 1
+	nextL := utils.NewCoordinate(y.CurrentValue(), x)
+
+	if b.Find(nextL) {
+		result = append(result, nextL)
+	}
+	return result
+}
+
+func (b Board) LeftUpLateralL(position utils.Coordinate) []utils.Coordinate {
+	result := make([]utils.Coordinate, 0)
+
+	y, _ := utils.NewCoordList(position.First)
+	y.MoveToPrev()
+	y.MoveToPrev()
+	x := position.Second + 1
+	nextL := utils.NewCoordinate(y.CurrentValue(), x)
+
+	if b.Find(nextL) {
+		result = append(result, nextL)
+	}
+	return result
+}
+
+func (b Board) RightUpLateralL(position utils.Coordinate) []utils.Coordinate {
+	result := make([]utils.Coordinate, 0)
+
+	y, _ := utils.NewCoordList(position.First)
+	y.MoveToNext()
+	y.MoveToNext()
+	x := position.Second + 1
+	nextL := utils.NewCoordinate(y.CurrentValue(), x)
+
+	if b.Find(nextL) {
+		result = append(result, nextL)
+	}
+	return result
 }

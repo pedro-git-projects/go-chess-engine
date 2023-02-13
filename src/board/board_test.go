@@ -10,14 +10,14 @@ import (
 
 func TestFind(t *testing.T) {
 	board := board.New()
-	got := board.Find(utils.NewCoordinate("a", 3))
+	got := board.Find(utils.NewCoordinate('a', 3))
 	expect := true
 
 	if got != expect {
 		t.Errorf("expected %t but got %t", expect, got)
 	}
 
-	got = board.Find(utils.NewCoordinate("z", 1))
+	got = board.Find(utils.NewCoordinate('z', 1))
 	expect = false
 
 	if got != expect {
@@ -27,16 +27,16 @@ func TestFind(t *testing.T) {
 
 func TestFilterByCol(t *testing.T) {
 	board := board.New()
-	got := board.FilterByCol("a")
+	got := board.FilterByCol('a')
 	expect := []utils.Coordinate{
-		utils.NewCoordinate("a", 8),
-		utils.NewCoordinate("a", 7),
-		utils.NewCoordinate("a", 6),
-		utils.NewCoordinate("a", 5),
-		utils.NewCoordinate("a", 4),
-		utils.NewCoordinate("a", 3),
-		utils.NewCoordinate("a", 2),
-		utils.NewCoordinate("a", 1),
+		utils.NewCoordinate('a', 8),
+		utils.NewCoordinate('a', 7),
+		utils.NewCoordinate('a', 6),
+		utils.NewCoordinate('a', 5),
+		utils.NewCoordinate('a', 4),
+		utils.NewCoordinate('a', 3),
+		utils.NewCoordinate('a', 2),
+		utils.NewCoordinate('a', 1),
 	}
 
 	if !reflect.DeepEqual(got, expect) {
@@ -48,14 +48,14 @@ func TestFilterByRow(t *testing.T) {
 	board := board.New()
 	got := board.FilterByRow(1)
 	expect := []utils.Coordinate{
-		utils.NewCoordinate("a", 1),
-		utils.NewCoordinate("b", 1),
-		utils.NewCoordinate("c", 1),
-		utils.NewCoordinate("d", 1),
-		utils.NewCoordinate("e", 1),
-		utils.NewCoordinate("f", 1),
-		utils.NewCoordinate("g", 1),
-		utils.NewCoordinate("h", 1),
+		utils.NewCoordinate('a', 1),
+		utils.NewCoordinate('b', 1),
+		utils.NewCoordinate('c', 1),
+		utils.NewCoordinate('d', 1),
+		utils.NewCoordinate('e', 1),
+		utils.NewCoordinate('f', 1),
+		utils.NewCoordinate('g', 1),
+		utils.NewCoordinate('h', 1),
 	}
 
 	if !reflect.DeepEqual(got, expect) {
@@ -65,12 +65,12 @@ func TestFilterByRow(t *testing.T) {
 
 func TestFowardRightDiagonal(t *testing.T) {
 	board := board.New()
-	got := board.FowardRightDiagonal(utils.NewCoordinate("d", 1))
+	got := board.FowardRightDiagonal(utils.NewCoordinate('d', 1))
 	expect := []utils.Coordinate{
-		utils.NewCoordinate("e", 2),
-		utils.NewCoordinate("f", 3),
-		utils.NewCoordinate("g", 4),
-		utils.NewCoordinate("h", 5),
+		utils.NewCoordinate('e', 2),
+		utils.NewCoordinate('f', 3),
+		utils.NewCoordinate('g', 4),
+		utils.NewCoordinate('h', 5),
 	}
 
 	if !reflect.DeepEqual(got, expect) {
@@ -80,11 +80,11 @@ func TestFowardRightDiagonal(t *testing.T) {
 
 func TestFowardLeftDiagonal(t *testing.T) {
 	board := board.New()
-	got := board.FowardLeftDiagonal(utils.NewCoordinate("f", 5))
+	got := board.FowardLeftDiagonal(utils.NewCoordinate('f', 5))
 	expect := []utils.Coordinate{
-		utils.NewCoordinate("e", 6),
-		utils.NewCoordinate("d", 7),
-		utils.NewCoordinate("c", 8),
+		utils.NewCoordinate('e', 6),
+		utils.NewCoordinate('d', 7),
+		utils.NewCoordinate('c', 8),
 	}
 
 	if !reflect.DeepEqual(got, expect) {
@@ -94,11 +94,11 @@ func TestFowardLeftDiagonal(t *testing.T) {
 
 func TestBackwardLeftDiagonal(t *testing.T) {
 	board := board.New()
-	got := board.BackwardLeftDiagonal(utils.NewCoordinate("e", 4))
+	got := board.BackwardLeftDiagonal(utils.NewCoordinate('e', 4))
 	expect := []utils.Coordinate{
-		utils.NewCoordinate("d", 3),
-		utils.NewCoordinate("c", 2),
-		utils.NewCoordinate("b", 1),
+		utils.NewCoordinate('d', 3),
+		utils.NewCoordinate('c', 2),
+		utils.NewCoordinate('b', 1),
 	}
 
 	if !reflect.DeepEqual(got, expect) {
@@ -108,11 +108,11 @@ func TestBackwardLeftDiagonal(t *testing.T) {
 
 func TestBackwardRightDiagonal(t *testing.T) {
 	board := board.New()
-	got := board.BackwardRightDiagonal(utils.NewCoordinate("e", 4))
+	got := board.BackwardRightDiagonal(utils.NewCoordinate('e', 4))
 	expect := []utils.Coordinate{
-		utils.NewCoordinate("f", 3),
-		utils.NewCoordinate("g", 2),
-		utils.NewCoordinate("h", 1),
+		utils.NewCoordinate('f', 3),
+		utils.NewCoordinate('g', 2),
+		utils.NewCoordinate('h', 1),
 	}
 
 	if !reflect.DeepEqual(got, expect) {
@@ -122,14 +122,14 @@ func TestBackwardRightDiagonal(t *testing.T) {
 
 func TestFirstFoward(t *testing.T) {
 	board := board.New()
-	got, ok := board.FirstFoward(utils.NewCoordinate("e", 4))
-	expect := utils.NewCoordinate("e", 5)
+	got, ok := board.FirstFoward(utils.NewCoordinate('e', 4))
+	expect := utils.NewCoordinate('e', 5)
 
 	if !reflect.DeepEqual(got, expect) || !ok {
 		t.Errorf("expected %v but got %v", expect, got)
 	}
 
-	got, ok = board.FirstFoward(utils.NewCoordinate("e", 8))
+	got, ok = board.FirstFoward(utils.NewCoordinate('e', 8))
 	if ok {
 		t.Errorf("expected %t but got %t", true, ok)
 	}
@@ -137,14 +137,14 @@ func TestFirstFoward(t *testing.T) {
 
 func TestNFoward(t *testing.T) {
 	board := board.New()
-	got, ok := board.NFoward(utils.NewCoordinate("e", 4), 4)
-	expect := utils.NewCoordinate("e", 8)
+	got, ok := board.NFoward(utils.NewCoordinate('e', 4), 4)
+	expect := utils.NewCoordinate('e', 8)
 
 	if !reflect.DeepEqual(got, expect) || !ok {
 		t.Errorf("expected %v but got %v", expect, got)
 	}
 
-	got, ok = board.NFoward(utils.NewCoordinate("e", 4), 5)
+	got, ok = board.NFoward(utils.NewCoordinate('e', 4), 5)
 	if ok {
 		t.Errorf("expected %t but got %t", true, ok)
 	}

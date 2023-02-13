@@ -18,16 +18,16 @@ type LinkedCoords struct {
 
 // NewCircularCoordList creates a new circular linked list of chess
 // letter coordinates starting at the intial letter parameter
-func NewCoordList(initial string) (*CircularLinkedCoords, error) {
+func NewCoordList(initial rune) (*CircularLinkedCoords, error) {
 	clc := CircularLinkedCoords{
-		a: NewNode("a"),
-		b: NewNode("b"),
-		c: NewNode("c"),
-		d: NewNode("d"),
-		e: NewNode("e"),
-		f: NewNode("f"),
-		g: NewNode("g"),
-		h: NewNode("h"),
+		a: NewNode('a'),
+		b: NewNode('b'),
+		c: NewNode('c'),
+		d: NewNode('d'),
+		e: NewNode('e'),
+		f: NewNode('f'),
+		g: NewNode('g'),
+		h: NewNode('h'),
 	}
 
 	clc.a.next = clc.b
@@ -49,21 +49,21 @@ func NewCoordList(initial string) (*CircularLinkedCoords, error) {
 	clc.h.previous = clc.a
 
 	switch initial {
-	case "a":
+	case 'a':
 		clc.current = clc.a
-	case "b":
+	case 'b':
 		clc.current = clc.b
-	case "c":
+	case 'c':
 		clc.current = clc.c
-	case "d":
+	case 'd':
 		clc.current = clc.d
-	case "e":
+	case 'e':
 		clc.current = clc.e
-	case "f":
+	case 'f':
 		clc.current = clc.f
-	case "g":
+	case 'g':
 		clc.current = clc.g
-	case "h":
+	case 'h':
 		clc.current = clc.h
 	default:
 		err := errors.New("invalid initial value")
@@ -75,26 +75,26 @@ func NewCoordList(initial string) (*CircularLinkedCoords, error) {
 
 // CurrentValue is an accessor for the current string value
 // on the list
-func (c LinkedCoords) CurrentValue() string {
+func (c LinkedCoords) CurrentValue() rune {
 	switch c.current {
 	case c.a:
-		return "a"
+		return 'a'
 	case c.b:
-		return "b"
+		return 'b'
 	case c.c:
-		return "c"
+		return 'c'
 	case c.d:
-		return "d"
+		return 'd'
 	case c.e:
-		return "e"
+		return 'e'
 	case c.f:
-		return "f"
+		return 'f'
 	case c.g:
-		return "g"
+		return 'g'
 	case c.h:
-		return "h"
+		return 'h'
 	}
-	return ""
+	return *new(rune)
 }
 
 // Next moves the current to the next node
