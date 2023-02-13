@@ -277,3 +277,23 @@ func TestRightpLateralL(t *testing.T) {
 		t.Errorf("expected %t but got %t", false, ok)
 	}
 }
+
+func TestCalcAllLs(t *testing.T) {
+	board := board.New()
+	got := board.CalcAllLs(utils.NewCoordinate('d', 4))
+
+	expect := []utils.Coordinate{
+		utils.NewCoordinate('e', 6),
+		utils.NewCoordinate('c', 6),
+		utils.NewCoordinate('c', 2),
+		utils.NewCoordinate('e', 2),
+		utils.NewCoordinate('f', 3),
+		utils.NewCoordinate('b', 3),
+		utils.NewCoordinate('b', 5),
+		utils.NewCoordinate('f', 5),
+	}
+
+	if !reflect.DeepEqual(got, expect) {
+		t.Errorf("expected %v but got %v", expect, got)
+	}
+}

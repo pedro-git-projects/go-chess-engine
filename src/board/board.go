@@ -5,8 +5,6 @@ import (
 	"github.com/pedro-git-projects/go-chess/src/utils"
 )
 
-// MAYBE TODO ? Change coordiantes from strings to runes
-
 // Board represents the a chessboard
 type Board struct {
 	coordinateMatrix [8][8]utils.Coordinate
@@ -302,4 +300,52 @@ func (b Board) RightUpLateralL(position utils.Coordinate) (rull utils.Coordinate
 		return nextL, true
 	}
 	return utils.Coordinate{}, false
+}
+
+// CalcAllLs calculates all L patterns from a given position
+// and returns the corresponding possibly empty coordinate slice
+func (b Board) CalcAllLs(position utils.Coordinate) []utils.Coordinate {
+	result := make([]utils.Coordinate, 0)
+
+	c, ok := b.FowardRightL(position)
+	if ok {
+		result = append(result, c)
+	}
+
+	c, ok = b.FowardLeftL(position)
+	if ok {
+		result = append(result, c)
+	}
+
+	c, ok = b.BackwardLeftL(position)
+	if ok {
+		result = append(result, c)
+	}
+
+	c, ok = b.BackwardRightL(position)
+	if ok {
+		result = append(result, c)
+	}
+
+	c, ok = b.RightDownLateralL(position)
+	if ok {
+		result = append(result, c)
+	}
+
+	c, ok = b.LeftDownLateralL(position)
+	if ok {
+		result = append(result, c)
+	}
+
+	c, ok = b.LeftUpLateralL(position)
+	if ok {
+		result = append(result, c)
+	}
+
+	c, ok = b.RightUpLateralL(position)
+	if ok {
+		result = append(result, c)
+	}
+
+	return result
 }
