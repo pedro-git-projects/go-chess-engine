@@ -1,5 +1,7 @@
 package utils
 
+import "fmt"
+
 // Coordinate represents an (y,x) chess board coordinate
 type Coordinate Pair[rune, int]
 
@@ -7,4 +9,8 @@ type Coordinate Pair[rune, int]
 // Coordinate type
 func NewCoordinate(y rune, x int) Coordinate {
 	return Coordinate{y, x}
+}
+
+func (c Coordinate) String() string {
+	return fmt.Sprintf("(%c, %d)", c.First, c.Second)
 }

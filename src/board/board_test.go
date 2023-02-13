@@ -149,3 +149,131 @@ func TestNFoward(t *testing.T) {
 		t.Errorf("expected %t but got %t", true, ok)
 	}
 }
+
+func TestFowardRightL(t *testing.T) {
+	board := board.New()
+	got, ok := board.FowardRightL(utils.NewCoordinate('f', 1))
+
+	expect := utils.NewCoordinate('g', 3)
+
+	if !reflect.DeepEqual(got, expect) || !ok {
+		t.Errorf("expected %v but got %v", expect, got)
+	}
+
+	got, ok = board.FowardRightL(utils.NewCoordinate('h', 3))
+	if ok {
+		t.Errorf("expected %t but got %t", false, ok)
+	}
+}
+
+func TestFowardLeftL(t *testing.T) {
+	board := board.New()
+	got, ok := board.FowardLeftL(utils.NewCoordinate('f', 1))
+
+	expect := utils.NewCoordinate('e', 3)
+
+	if !reflect.DeepEqual(got, expect) || !ok {
+		t.Errorf("expected %v but got %v", expect, got)
+	}
+
+	got, ok = board.FowardLeftL(utils.NewCoordinate('a', 3))
+	if ok {
+		t.Errorf("expected %t but got %t", false, ok)
+	}
+}
+
+func TestBackwardRightL(t *testing.T) {
+	board := board.New()
+	got, ok := board.BackwardRightL(utils.NewCoordinate('e', 3))
+
+	expect := utils.NewCoordinate('f', 1)
+
+	if !reflect.DeepEqual(got, expect) || !ok {
+		t.Errorf("expected %v but got %v", expect, got)
+	}
+
+	got, ok = board.BackwardRightL(utils.NewCoordinate('f', 2))
+	if ok {
+		t.Errorf("expected %t but got %t", false, ok)
+	}
+}
+
+func TestBackwardLeftL(t *testing.T) {
+	board := board.New()
+	got, ok := board.BackwardLeftL(utils.NewCoordinate('e', 3))
+
+	expect := utils.NewCoordinate('d', 1)
+
+	if !reflect.DeepEqual(got, expect) || !ok {
+		t.Errorf("expected %v but got %v", expect, got)
+	}
+
+	got, ok = board.BackwardLeftL(utils.NewCoordinate('f', 2))
+	if ok {
+		t.Errorf("expected %t but got %t", false, ok)
+	}
+}
+
+func TestRightDownLateralL(t *testing.T) {
+	board := board.New()
+	got, ok := board.RightDownLateralL(utils.NewCoordinate('e', 3))
+
+	expect := utils.NewCoordinate('g', 2)
+
+	if !reflect.DeepEqual(got, expect) || !ok {
+		t.Errorf("expected %v but got %v", expect, got)
+	}
+
+	got, ok = board.RightDownLateralL(utils.NewCoordinate('g', 3))
+	if ok {
+		t.Errorf("expected %t but got %t", false, ok)
+	}
+}
+
+func TestLeftDownLateralL(t *testing.T) {
+	board := board.New()
+	got, ok := board.LeftDownLateralL(utils.NewCoordinate('e', 3))
+
+	expect := utils.NewCoordinate('c', 2)
+
+	if !reflect.DeepEqual(got, expect) || !ok {
+		t.Errorf("expected %v but got %v", expect, got)
+	}
+
+	got, ok = board.LeftDownLateralL(utils.NewCoordinate('b', 3))
+	if ok {
+		t.Errorf("expected %t but got %t", false, ok)
+	}
+}
+
+func TestLeftUpLateralL(t *testing.T) {
+	board := board.New()
+	got, ok := board.LeftUpLateralL(utils.NewCoordinate('e', 3))
+
+	expect := utils.NewCoordinate('c', 4)
+
+	if !reflect.DeepEqual(got, expect) || !ok {
+		t.Errorf("expected %v but got %v", expect, got)
+	}
+
+	got, ok = board.LeftUpLateralL(utils.NewCoordinate('b', 3))
+	if ok {
+		t.Errorf("expected %t but got %t", false, ok)
+	}
+}
+
+func TestRightpLateralL(t *testing.T) {
+	board := board.New()
+	got, ok := board.RightUpLateralL(utils.NewCoordinate('e', 3))
+
+	expect := utils.NewCoordinate('g', 4)
+
+	if !reflect.DeepEqual(got, expect) || !ok {
+		t.Errorf("expected %v but got %v", expect, got)
+	}
+
+	got, ok = board.RightUpLateralL(utils.NewCoordinate('g', 3))
+	if ok {
+		t.Errorf("expected %t but got %t", false, ok)
+	}
+}

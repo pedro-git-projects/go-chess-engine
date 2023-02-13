@@ -160,8 +160,7 @@ func (b Board) BackwardRightDiagonal(position utils.Coordinate) []utils.Coordina
 	return result
 }
 
-// TODO Change to slice
-// FirstFoward returns the next first position in front of the current one and ok if it succeeds
+// FirstFoward returns the next square in front of the current one as well as a true value if it succeeds
 // it returns an empty coordinate and not ok else
 func (b Board) FirstFoward(position utils.Coordinate) (foward utils.Coordinate, ok bool) {
 	next := position.Second + 1
@@ -171,7 +170,7 @@ func (b Board) FirstFoward(position utils.Coordinate) (foward utils.Coordinate, 
 	return utils.Coordinate{}, false
 }
 
-// NFoward returns the position n squares in front of current and and ok if it succeeds
+// NFoward returns the nth square in front of current as well as a true value if it succeeds
 // it returns an empty coordinate and not ok else
 func (b Board) NFoward(position utils.Coordinate, squares int) (foward utils.Coordinate, ok bool) {
 	next := position.Second + squares
@@ -181,66 +180,70 @@ func (b Board) NFoward(position utils.Coordinate, squares int) (foward utils.Coo
 	return utils.Coordinate{}, false
 }
 
-// FowardRightL returns a possibly empty slice of coodrinates
-func (b Board) FowardRightL(position utils.Coordinate) []utils.Coordinate {
-	result := make([]utils.Coordinate, 0)
-
+// FowardRightL returns the position two squares foward one right from the current
+// as well as an ok value if it succeeds
+// else it returns a zeroed coordinate and false
+func (b Board) FowardRightL(position utils.Coordinate) (frl utils.Coordinate, ok bool) {
 	y, _ := utils.NewCoordList(position.First)
 	y.MoveToNext()
 	x := position.Second + 2
 	nextL := utils.NewCoordinate(y.CurrentValue(), x)
 
 	if b.Find(nextL) {
-		result = append(result, nextL)
+		return nextL, true
 	}
-	return result
+	return utils.Coordinate{}, false
 }
 
-func (b Board) FowardLeftL(position utils.Coordinate) []utils.Coordinate {
-	result := make([]utils.Coordinate, 0)
-
+// FowardLeftL returns the position two squares foward one left from the current
+// as well as an ok value if it succeeds
+// else it returns a zeroed coordinate and false
+func (b Board) FowardLeftL(position utils.Coordinate) (fll utils.Coordinate, ok bool) {
 	y, _ := utils.NewCoordList(position.First)
 	y.MoveToPrev()
 	x := position.Second + 2
 	nextL := utils.NewCoordinate(y.CurrentValue(), x)
 
 	if b.Find(nextL) {
-		result = append(result, nextL)
+		return nextL, true
 	}
-	return result
+	return utils.Coordinate{}, false
 }
 
-func (b Board) BackwardRightL(position utils.Coordinate) []utils.Coordinate {
-	result := make([]utils.Coordinate, 0)
-
+// BackwardRightL returns the position two squares backward one right from the current
+// as well as an ok value if it succeeds
+// else it returns a zeroed coordinate and false
+func (b Board) BackwardRightL(position utils.Coordinate) (brl utils.Coordinate, ok bool) {
 	y, _ := utils.NewCoordList(position.First)
 	y.MoveToNext()
 	x := position.Second - 2
 	nextL := utils.NewCoordinate(y.CurrentValue(), x)
 
 	if b.Find(nextL) {
-		result = append(result, nextL)
+		return nextL, true
 	}
-	return result
+	return utils.Coordinate{}, false
 }
 
-func (b Board) BackwardLeftL(position utils.Coordinate) []utils.Coordinate {
-	result := make([]utils.Coordinate, 0)
-
+// BackwardLeftL returns the position two squares backward one left from the current
+// as well as an ok value if it succeeds
+// else it returns a zeroed coordinate and false
+func (b Board) BackwardLeftL(position utils.Coordinate) (brl utils.Coordinate, ok bool) {
 	y, _ := utils.NewCoordList(position.First)
 	y.MoveToPrev()
 	x := position.Second - 2
 	nextL := utils.NewCoordinate(y.CurrentValue(), x)
 
 	if b.Find(nextL) {
-		result = append(result, nextL)
+		return nextL, true
 	}
-	return result
+	return utils.Coordinate{}, false
 }
 
-func (b Board) RighDownLateralL(position utils.Coordinate) []utils.Coordinate {
-	result := make([]utils.Coordinate, 0)
-
+// RightDownLateralL returns the position two squares right one down from the current
+// as well as an ok value if it succeeds
+// else it returns a zeroed coordinate and false
+func (b Board) RightDownLateralL(position utils.Coordinate) (rdll utils.Coordinate, ok bool) {
 	y, _ := utils.NewCoordList(position.First)
 	y.MoveToNext()
 	y.MoveToNext()
@@ -248,14 +251,15 @@ func (b Board) RighDownLateralL(position utils.Coordinate) []utils.Coordinate {
 	nextL := utils.NewCoordinate(y.CurrentValue(), x)
 
 	if b.Find(nextL) {
-		result = append(result, nextL)
+		return nextL, true
 	}
-	return result
+	return utils.Coordinate{}, false
 }
 
-func (b Board) LeftDownLateralL(position utils.Coordinate) []utils.Coordinate {
-	result := make([]utils.Coordinate, 0)
-
+// LeftDownLateralL returns the position two squares left one down from the current
+// as well as an ok value if it succeeds
+// else it returns a zeroed coordinate and false
+func (b Board) LeftDownLateralL(position utils.Coordinate) (ldll utils.Coordinate, ok bool) {
 	y, _ := utils.NewCoordList(position.First)
 	y.MoveToPrev()
 	y.MoveToPrev()
@@ -263,14 +267,15 @@ func (b Board) LeftDownLateralL(position utils.Coordinate) []utils.Coordinate {
 	nextL := utils.NewCoordinate(y.CurrentValue(), x)
 
 	if b.Find(nextL) {
-		result = append(result, nextL)
+		return nextL, true
 	}
-	return result
+	return utils.Coordinate{}, false
 }
 
-func (b Board) LeftUpLateralL(position utils.Coordinate) []utils.Coordinate {
-	result := make([]utils.Coordinate, 0)
-
+// LeftUpLateralL returns the position two squares left one up from the current
+// as well as an ok value if it succeeds
+// else it returns a zeroed coordinate and false
+func (b Board) LeftUpLateralL(position utils.Coordinate) (lull utils.Coordinate, ok bool) {
 	y, _ := utils.NewCoordList(position.First)
 	y.MoveToPrev()
 	y.MoveToPrev()
@@ -278,14 +283,15 @@ func (b Board) LeftUpLateralL(position utils.Coordinate) []utils.Coordinate {
 	nextL := utils.NewCoordinate(y.CurrentValue(), x)
 
 	if b.Find(nextL) {
-		result = append(result, nextL)
+		return nextL, true
 	}
-	return result
+	return utils.Coordinate{}, false
 }
 
-func (b Board) RightUpLateralL(position utils.Coordinate) []utils.Coordinate {
-	result := make([]utils.Coordinate, 0)
-
+// RightUpLateralL returns the position two squares right one up from the current
+// as well as an ok value if it succeeds
+// else it returns a zeroed coordinate and false
+func (b Board) RightUpLateralL(position utils.Coordinate) (rull utils.Coordinate, ok bool) {
 	y, _ := utils.NewCoordList(position.First)
 	y.MoveToNext()
 	y.MoveToNext()
@@ -293,7 +299,7 @@ func (b Board) RightUpLateralL(position utils.Coordinate) []utils.Coordinate {
 	nextL := utils.NewCoordinate(y.CurrentValue(), x)
 
 	if b.Find(nextL) {
-		result = append(result, nextL)
+		return nextL, true
 	}
-	return result
+	return utils.Coordinate{}, false
 }
