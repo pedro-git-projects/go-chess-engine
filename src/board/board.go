@@ -1,14 +1,14 @@
 package board
 
 import (
-	"github.com/pedro-git-projects/go-chess/src/pieces"
+	"github.com/pedro-git-projects/go-chess/src/piece"
 	"github.com/pedro-git-projects/go-chess/src/utils"
 )
 
 // Board represents the a chessboard
 type Board struct {
 	coordinateMatrix [8][8]utils.Coordinate
-	state            map[utils.Coordinate]pieces.Piece
+	state            map[utils.Coordinate]piece.Piece
 }
 
 // New returns a pointer to a board
@@ -98,6 +98,33 @@ func (b Board) FowardRightDiagonal(position utils.Coordinate) []utils.Coordinate
 	return result
 }
 
+// NthFowardRightDiagonal returns the postion of the nth square in the diagonal right of the current position
+func (b Board) NthFowardRightDiagonal(position utils.Coordinate, squares int) (diag utils.Coordinate, ok bool) {
+	y, _ := utils.NewCoordList(position.First)
+	y.MoveToNext()
+	x := position.Second + 1
+	nextDiagonal := utils.NewCoordinate(y.CurrentValue(), x)
+
+	if !b.Find(nextDiagonal) {
+		return utils.Coordinate{}, false
+	}
+
+	for i := 0; i < squares-1; i++ {
+		if !b.Find(nextDiagonal) {
+			return utils.Coordinate{}, false
+		}
+		x++
+		y.MoveToNext()
+		nextDiagonal = utils.NewCoordinate(y.CurrentValue(), x)
+	}
+
+	if !b.Find(nextDiagonal) {
+		return utils.Coordinate{}, false
+	}
+
+	return nextDiagonal, true
+}
+
 // FowardLeftDiagonal returns the foward left diagonal of a given
 // board position as a possibly empty slice of coordinates
 func (b Board) FowardLeftDiagonal(position utils.Coordinate) []utils.Coordinate {
@@ -116,6 +143,33 @@ func (b Board) FowardLeftDiagonal(position utils.Coordinate) []utils.Coordinate 
 	}
 
 	return result
+}
+
+// NthFowardLeftDiagonal returns the postion of the nth square in the diagonal right of the current position
+func (b Board) NthFowardLeftDiagonal(position utils.Coordinate, squares int) (diag utils.Coordinate, ok bool) {
+	y, _ := utils.NewCoordList(position.First)
+	y.MoveToPrev()
+	x := position.Second + 1
+	nextDiagonal := utils.NewCoordinate(y.CurrentValue(), x)
+
+	if !b.Find(nextDiagonal) {
+		return utils.Coordinate{}, false
+	}
+
+	for i := 0; i < squares-1; i++ {
+		if !b.Find(nextDiagonal) {
+			return utils.Coordinate{}, false
+		}
+		x++
+		y.MoveToPrev()
+		nextDiagonal = utils.NewCoordinate(y.CurrentValue(), x)
+	}
+
+	if !b.Find(nextDiagonal) {
+		return utils.Coordinate{}, false
+	}
+
+	return nextDiagonal, true
 }
 
 // BackwardLeftDiagonal returns the backward left diagonal of a given
@@ -138,6 +192,33 @@ func (b Board) BackwardLeftDiagonal(position utils.Coordinate) []utils.Coordinat
 	return result
 }
 
+// NthBackwardLeftDiagonal returns the postion behind of the nth square in the diagonal left of the current position
+func (b Board) NthBackwardLeftDiagonal(position utils.Coordinate, squares int) (diag utils.Coordinate, ok bool) {
+	y, _ := utils.NewCoordList(position.First)
+	y.MoveToPrev()
+	x := position.Second - 1
+	nextDiagonal := utils.NewCoordinate(y.CurrentValue(), x)
+
+	if !b.Find(nextDiagonal) {
+		return utils.Coordinate{}, false
+	}
+
+	for i := 0; i < squares-1; i++ {
+		if !b.Find(nextDiagonal) {
+			return utils.Coordinate{}, false
+		}
+		x--
+		y.MoveToPrev()
+		nextDiagonal = utils.NewCoordinate(y.CurrentValue(), x)
+	}
+
+	if !b.Find(nextDiagonal) {
+		return utils.Coordinate{}, false
+	}
+
+	return nextDiagonal, true
+}
+
 // BackwardRightDiagonal  the backward right diagonal of a given
 // board position as a possibly empty slice of coordinates
 func (b Board) BackwardRightDiagonal(position utils.Coordinate) []utils.Coordinate {
@@ -156,6 +237,33 @@ func (b Board) BackwardRightDiagonal(position utils.Coordinate) []utils.Coordina
 	}
 
 	return result
+}
+
+// NthBackwardRightDiagonal returns the postion behind of the nth square in the diagonal right of the current position
+func (b Board) NthBackwardRightDiagonal(position utils.Coordinate, squares int) (diag utils.Coordinate, ok bool) {
+	y, _ := utils.NewCoordList(position.First)
+	y.MoveToNext()
+	x := position.Second - 1
+	nextDiagonal := utils.NewCoordinate(y.CurrentValue(), x)
+
+	if !b.Find(nextDiagonal) {
+		return utils.Coordinate{}, false
+	}
+
+	for i := 0; i < squares-1; i++ {
+		if !b.Find(nextDiagonal) {
+			return utils.Coordinate{}, false
+		}
+		x--
+		y.MoveToNext()
+		nextDiagonal = utils.NewCoordinate(y.CurrentValue(), x)
+	}
+
+	if !b.Find(nextDiagonal) {
+		return utils.Coordinate{}, false
+	}
+
+	return nextDiagonal, true
 }
 
 // FirstFoward returns the next square in front of the current one as well as a true value if it succeeds
@@ -311,41 +419,53 @@ func (b Board) CalcAllLs(position utils.Coordinate) []utils.Coordinate {
 	if ok {
 		result = append(result, c)
 	}
-
 	c, ok = b.FowardLeftL(position)
 	if ok {
 		result = append(result, c)
 	}
-
 	c, ok = b.BackwardLeftL(position)
 	if ok {
 		result = append(result, c)
 	}
-
 	c, ok = b.BackwardRightL(position)
 	if ok {
 		result = append(result, c)
 	}
-
 	c, ok = b.RightDownLateralL(position)
 	if ok {
 		result = append(result, c)
 	}
-
 	c, ok = b.LeftDownLateralL(position)
 	if ok {
 		result = append(result, c)
 	}
-
 	c, ok = b.LeftUpLateralL(position)
 	if ok {
 		result = append(result, c)
 	}
-
 	c, ok = b.RightUpLateralL(position)
 	if ok {
 		result = append(result, c)
 	}
-
 	return result
+}
+
+func (b Board) State() map[utils.Coordinate]piece.Piece {
+	return b.state
+}
+
+func (b Board) IsOccupied(c utils.Coordinate) bool {
+	if b.state[c] != nil {
+		return false
+	}
+	return true
+}
+
+func (b *Board) MovePiece(c utils.Coordinate, p piece.Piece) (ok bool) {
+	_, ok = b.state[c]
+	if !ok {
+		return ok
+	}
+	b.state[c] = p
+	return ok
 }

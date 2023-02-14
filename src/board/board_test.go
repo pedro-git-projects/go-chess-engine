@@ -297,3 +297,67 @@ func TestCalcAllLs(t *testing.T) {
 		t.Errorf("expected %v but got %v", expect, got)
 	}
 }
+
+func TestNthFowardRightDiagonal(t *testing.T) {
+	board := board.New()
+	got, ok := board.NthFowardRightDiagonal(utils.NewCoordinate('e', 2), 1)
+
+	expect := utils.NewCoordinate('f', 3)
+
+	if !reflect.DeepEqual(got, expect) || !ok {
+		t.Errorf("expected %v but got %v", expect, got)
+	}
+
+	got, ok = board.NthFowardRightDiagonal(utils.NewCoordinate('e', 2), 4)
+	if ok {
+		t.Errorf("expected %t but got %t", false, ok)
+	}
+}
+
+func TestNthFowardLeftDiagonal(t *testing.T) {
+	board := board.New()
+	got, ok := board.NthFowardLeftDiagonal(utils.NewCoordinate('e', 2), 3)
+
+	expect := utils.NewCoordinate('b', 5)
+
+	if !reflect.DeepEqual(got, expect) || !ok {
+		t.Errorf("expected %v but got %v", expect, got)
+	}
+
+	got, ok = board.NthFowardRightDiagonal(utils.NewCoordinate('e', 2), 5)
+	if ok {
+		t.Errorf("expected %t but got %t", false, ok)
+	}
+}
+
+func TestNthBackwardLeftDiagonal(t *testing.T) {
+	board := board.New()
+	got, ok := board.NthBackwardLeftDiagonal(utils.NewCoordinate('e', 2), 1)
+
+	expect := utils.NewCoordinate('d', 1)
+
+	if !reflect.DeepEqual(got, expect) || !ok {
+		t.Errorf("expected %v but got %v", expect, got)
+	}
+
+	got, ok = board.NthBackwardRightDiagonal(utils.NewCoordinate('e', 2), 2)
+	if ok {
+		t.Errorf("expected %t but got %t", false, ok)
+	}
+}
+
+func TestNthBackwardRightDiagonal(t *testing.T) {
+	board := board.New()
+	got, ok := board.NthBackwardRightDiagonal(utils.NewCoordinate('e', 2), 1)
+
+	expect := utils.NewCoordinate('f', 1)
+
+	if !reflect.DeepEqual(got, expect) || !ok {
+		t.Errorf("expected %v but got %v", expect, got)
+	}
+
+	got, ok = board.NthBackwardRightDiagonal(utils.NewCoordinate('e', 2), 2)
+	if ok {
+		t.Errorf("expected %t but got %t", false, ok)
+	}
+}

@@ -1,4 +1,4 @@
-package pieces
+package piece
 
 // type Color represents the chess piece colors
 type Color int

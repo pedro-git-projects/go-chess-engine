@@ -1,1 +1,89 @@
 package pieces
+
+import (
+	"github.com/pedro-git-projects/go-chess/src/board"
+	"github.com/pedro-git-projects/go-chess/src/piece"
+	"github.com/pedro-git-projects/go-chess/src/utils"
+)
+
+// the Pawn type represents pawn pieces in a game of chess
+type Pawn struct {
+	board      *board.Board
+	color      piece.Color
+	moved      bool
+	position   utils.Coordinate
+	legalMoves []utils.Coordinate
+}
+
+// NewPawn returns a new pawn instance
+func NewPawn(color piece.Color, position utils.Coordinate, board *board.Board) *Pawn {
+	return &Pawn{
+		color:    color,
+		moved:    false,
+		position: position,
+		board:    board,
+	}
+}
+
+// Color is an accessor for the color field
+func (p Pawn) Color() piece.Color {
+	return p.color
+}
+
+// Position returns the current piece position
+func (p Pawn) Position() utils.Coordinate {
+	return p.position
+}
+
+// LegalMoves return the possibly empty list of legal moves
+// for the piece given its current position
+func (p Pawn) LegalMoves() []utils.Coordinate {
+	return p.legalMoves
+}
+
+// Moved sets the pawn moved field to true
+func (p *Pawn) Moved() {
+	p.moved = true
+}
+
+// CalculateLegalMoves calculates the possibly empty
+// slice of position the piece can move to
+// given its current position
+// and mutates the legalMoves field
+func (p *Pawn) CalculateLegalMoves() {
+	r := make([]utils.Coordinate, 0)
+	position, ok := p.board.FirstFoward(p.position)
+	if !p.board.IsOccupied(position) && ok {
+		r = append(r, position)
+	}
+	if !ok {
+		return
+	}
+
+	lDiagonal, ok := p.board.NthFowardRightDiagonal(p.position, 1)
+	if p.board.IsOccupied(lDiagonal) && ok {
+		r = append(r, lDiagonal)
+
+	}
+	rDiagonal, ok := p.board.NthBackwardLeftDiagonal(p.position, 1)
+	if p.board.IsOccupied(rDiagonal) && ok {
+		r = append(r, rDiagonal)
+	}
+	if !p.moved {
+		position, ok := p.board.NFoward(p.position, 2)
+		if ok && !p.board.IsOccupied(position) {
+			r = append(r, position)
+		}
+	}
+
+	p.legalMoves = r
+}
+
+// Move moves the piece to a given square
+// if it is in the legal movement slice
+func (p *Pawn) Move(to utils.Coordinate) {
+	p.CalculateLegalMoves()
+	if utils.Contains(p.legalMoves, to) {
+		p.board.MovePiece(to, p)
+	}
+}
