@@ -29,11 +29,38 @@ func New() *Board {
 
 	b := Board{
 		coordinateMatrix: matrix,
-		state: map[utils.Coordinate]piece.Piece{
-			utils.NewCoordinate('a', 1): piece.NewPawn(piece.White, utils.NewCoordinate('a', 1)),
-		},
+		state:            make(map[utils.Coordinate]piece.Piece),
 	}
+	b.initializeBoard()
 	return &b
+}
+
+// initializeBoard sets up the board state to its default position
+func (b *Board) initializeBoard() {
+	utils.Copy(b.state, initilizeWhitePawns())
+	utils.Copy(b.state, initilizeBlackPawns())
+}
+
+// initilizeWhitePawns sets all white pawns to their default positions
+func initilizeWhitePawns() map[utils.Coordinate]piece.Piece {
+	m := make(map[utils.Coordinate]piece.Piece)
+	l, _ := utils.NewCoordList('a')
+	for i := 1; i <= 8; i++ {
+		m[utils.NewCoordinate(l.CurrentValue(), 2)] = piece.NewPawn(piece.White, utils.NewCoordinate(l.CurrentValue(), 2))
+		l.MoveToNext()
+	}
+	return m
+}
+
+// initilizeBlackPawns sets all white pawns to their default positions
+func initilizeBlackPawns() map[utils.Coordinate]piece.Piece {
+	m := make(map[utils.Coordinate]piece.Piece)
+	l, _ := utils.NewCoordList('a')
+	for i := 1; i <= 8; i++ {
+		m[utils.NewCoordinate(l.CurrentValue(), 7)] = piece.NewPawn(piece.Black, utils.NewCoordinate(l.CurrentValue(), 7))
+		l.MoveToNext()
+	}
+	return m
 }
 
 // Matrix is an accessor for the board matrix
@@ -464,6 +491,10 @@ func (b Board) IsOccupied(c utils.Coordinate) bool {
 		return false
 	}
 	return true
+}
+
+func (b Board) PieceAt(c utils.Coordinate) piece.Piece {
+	return b.state[c]
 }
 
 func (b *Board) MovePiece(c utils.Coordinate, p piece.Piece) (ok bool) {
