@@ -1,6 +1,8 @@
 package board
 
 import (
+	"reflect"
+
 	"github.com/pedro-git-projects/go-chess/src/piece"
 	"github.com/pedro-git-projects/go-chess/src/utils"
 )
@@ -27,6 +29,9 @@ func New() *Board {
 
 	b := Board{
 		coordinateMatrix: matrix,
+		state: map[utils.Coordinate]piece.Piece{
+			utils.NewCoordinate('a', 1): piece.NewPawn(piece.White, utils.NewCoordinate('a', 1)),
+		},
 	}
 	return &b
 }
@@ -455,7 +460,7 @@ func (b Board) State() map[utils.Coordinate]piece.Piece {
 }
 
 func (b Board) IsOccupied(c utils.Coordinate) bool {
-	if b.state[c] != nil {
+	if !reflect.DeepEqual(b.state[c], nil) {
 		return false
 	}
 	return true

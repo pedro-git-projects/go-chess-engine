@@ -11,6 +11,6 @@ type Piece interface {
 	Color() Color
 	Position() utils.Coordinate
 	LegalMoves() []utils.Coordinate
-	CalculateLegalMoves()
-	Move(to utils.Coordinate)
+	CalculateLegalMoves(board board)
+	Move(to utils.Coordinate, board board)
 }

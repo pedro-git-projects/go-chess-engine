@@ -1,0 +1,4 @@
+package factories
+
+func PieceFactory() {
+}

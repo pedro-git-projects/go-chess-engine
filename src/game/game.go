@@ -9,3 +9,9 @@ type Game struct {
 	pieces []*piece.Piece
 	board  *board.Board
 }
+
+func New() *Game {
+	return &Game{
+		board: board.New(),
+	}
+}
