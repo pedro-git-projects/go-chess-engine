@@ -1,8 +1,6 @@
 package board
 
 import (
-	"reflect"
-
 	"github.com/pedro-git-projects/go-chess/src/piece"
 	"github.com/pedro-git-projects/go-chess/src/utils"
 )
@@ -39,6 +37,7 @@ func New() *Board {
 func (b *Board) initializeBoard() {
 	utils.Copy(b.state, initilizeWhitePawns())
 	utils.Copy(b.state, initilizeBlackPawns())
+	utils.Copy(b.state, initilizeBlankSquares())
 }
 
 // initilizeWhitePawns sets all white pawns to their default positions
@@ -59,6 +58,20 @@ func initilizeBlackPawns() map[utils.Coordinate]piece.Piece {
 	for i := 1; i <= 8; i++ {
 		m[utils.NewCoordinate(l.CurrentValue(), 7)] = piece.NewPawn(piece.Black, utils.NewCoordinate(l.CurrentValue(), 7))
 		l.MoveToNext()
+	}
+	return m
+}
+
+func initilizeBlankSquares() map[utils.Coordinate]piece.Piece {
+	m := make(map[utils.Coordinate]piece.Piece)
+	l, _ := utils.NewCircularCoordList('a')
+	row := 3
+	for row < 6 {
+		for i := 0; i < 8; i++ {
+			m[utils.NewCoordinate(l.CurrentValue(), row)] = nil
+			l.MoveToNext()
+		}
+		row++
 	}
 	return m
 }
@@ -487,7 +500,7 @@ func (b Board) State() map[utils.Coordinate]piece.Piece {
 }
 
 func (b Board) IsOccupied(c utils.Coordinate) bool {
-	if !reflect.DeepEqual(b.state[c], nil) {
+	if b.state[c] == nil {
 		return false
 	}
 	return true
@@ -502,6 +515,7 @@ func (b *Board) MovePiece(c utils.Coordinate, p piece.Piece) (ok bool) {
 	if !ok {
 		return ok
 	}
+	b.state[p.Position()] = nil
 	b.state[c] = p
 	return ok
 }

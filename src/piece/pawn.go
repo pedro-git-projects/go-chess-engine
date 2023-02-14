@@ -48,6 +48,7 @@ func (p *Pawn) Moved() {
 // and mutates the legalMoves field
 func (p *Pawn) CalculateLegalMoves(board board) {
 	r := make([]utils.Coordinate, 0)
+
 	position, ok := board.FirstFoward(p.position)
 	if !board.IsOccupied(position) && ok {
 		r = append(r, position)
@@ -81,5 +82,10 @@ func (p *Pawn) Move(to utils.Coordinate, board board) {
 	p.CalculateLegalMoves(board)
 	if utils.Contains(p.legalMoves, to) {
 		board.MovePiece(to, p)
+		p.position = to
 	}
+}
+
+func (p Pawn) String() string {
+	return "pawn"
 }
