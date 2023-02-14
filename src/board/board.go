@@ -495,10 +495,13 @@ func (b Board) CalcAllLs(position utils.Coordinate) []utils.Coordinate {
 	return result
 }
 
+// State returns the board map
 func (b Board) State() map[utils.Coordinate]piece.Piece {
 	return b.state
 }
 
+// IsOccupied returns true if the passed coordinate is
+// not nil, false otherwise
 func (b Board) IsOccupied(c utils.Coordinate) bool {
 	if b.state[c] == nil {
 		return false
@@ -506,10 +509,14 @@ func (b Board) IsOccupied(c utils.Coordinate) bool {
 	return true
 }
 
+// PieceAt returns the piece at a given coordinate
 func (b Board) PieceAt(c utils.Coordinate) piece.Piece {
 	return b.state[c]
 }
 
+// MovePiece moves clears the current position of a piece in the map
+// and associates the piece as the value of the new coordinate key
+// if the coordinate exist
 func (b *Board) MovePiece(c utils.Coordinate, p piece.Piece) (ok bool) {
 	_, ok = b.state[c]
 	if !ok {
