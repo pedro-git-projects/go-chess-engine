@@ -4,6 +4,8 @@ import (
 	"github.com/pedro-git-projects/go-chess/src/utils"
 )
 
+// TODO fix moved field attribution
+
 // the Pawn type represents pawn pieces in a game of chess
 type Pawn struct {
 	color      Color
@@ -66,6 +68,7 @@ func (p *Pawn) CalculateLegalMoves(board board) {
 	if board.IsOccupied(rDiagonal) && ok {
 		r = append(r, rDiagonal)
 	}
+
 	if !p.moved {
 		position, ok := board.NFoward(p.position, 2)
 		if ok && !board.IsOccupied(position) {
@@ -79,6 +82,9 @@ func (p *Pawn) CalculateLegalMoves(board board) {
 // Move moves the piece to a given square
 // if it is in the legal movement slice
 func (p *Pawn) Move(to utils.Coordinate, board board) {
+	// if p.moved == false {
+	// 	p.moved = true
+	// }
 	p.CalculateLegalMoves(board)
 	if utils.Contains(p.legalMoves, to) {
 		board.MovePiece(to, p)

@@ -1,4 +1,0 @@
-package factories
-
-func PieceFactory() {
-}

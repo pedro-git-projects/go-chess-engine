@@ -1,6 +1,9 @@
 package board
 
 import (
+	"fmt"
+	"sort"
+
 	"github.com/pedro-git-projects/go-chess/src/piece"
 	"github.com/pedro-git-projects/go-chess/src/utils"
 )
@@ -66,7 +69,7 @@ func initilizeBlankSquares() map[utils.Coordinate]piece.Piece {
 	m := make(map[utils.Coordinate]piece.Piece)
 	l, _ := utils.NewCircularCoordList('a')
 	row := 3
-	for row < 6 {
+	for row <= 6 {
 		for i := 0; i < 8; i++ {
 			m[utils.NewCoordinate(l.CurrentValue(), row)] = nil
 			l.MoveToNext()
@@ -500,6 +503,35 @@ func (b Board) State() map[utils.Coordinate]piece.Piece {
 	return b.state
 }
 
+// StateStr retuns a string representation of the chessboard
+// in the form of [coord piece]
+func (b Board) StateStr() string {
+	s := new(string)
+
+	keys := make([]string, 0)
+	for k := range b.state {
+		keys = append(keys, string(k.First)+fmt.Sprint(k.Second))
+	}
+	sort.Strings(keys)
+
+	counter := 1
+	for _, k := range keys {
+		coord, err := utils.CoordFromStr(k)
+		if err != nil {
+			fmt.Println(err)
+		}
+		if counter%8 == 0 {
+			*s += fmt.Sprintf("[%v %v]\n", k, b.state[coord])
+			counter++
+		} else {
+			*s += fmt.Sprintf("[%v %v]", k, b.state[coord])
+			counter++
+		}
+	}
+
+	return *s
+}
+
 // IsOccupied returns true if the passed coordinate is
 // not nil, false otherwise
 func (b Board) IsOccupied(c utils.Coordinate) bool {
@@ -522,6 +554,7 @@ func (b *Board) MovePiece(c utils.Coordinate, p piece.Piece) (ok bool) {
 	if !ok {
 		return ok
 	}
+	b.state[c] = nil
 	b.state[p.Position()] = nil
 	b.state[c] = p
 	return ok

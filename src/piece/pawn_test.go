@@ -1,6 +1,7 @@
 package piece_test
 
 import (
+	"fmt"
 	"reflect"
 	"testing"
 
@@ -11,6 +12,7 @@ import (
 func TestMovement(t *testing.T) {
 	b := board.New()
 	state := b.State()
+	fmt.Println(b.StateStr())
 
 	a4 := state[utils.NewCoordinate('a', 4)]
 
@@ -18,6 +20,7 @@ func TestMovement(t *testing.T) {
 	pawn.Move(utils.NewCoordinate('a', 4), b)
 
 	newstate := b.State()
+	fmt.Println(b.StateStr())
 	newa4 := newstate[utils.NewCoordinate('a', 4)]
 	newa2 := newstate[utils.NewCoordinate('a', 2)]
 
@@ -48,4 +51,15 @@ func TestCalculateLegalMoves(t *testing.T) {
 	if !reflect.DeepEqual(got, expect) {
 		t.Errorf("expected %v but got %v", expect, got)
 	}
+}
+
+func TestKillPiece(t *testing.T) {
+	b := board.New()
+	pawn := b.PieceAt(utils.NewCoordinate('a', 2))
+	pawn.Move(utils.NewCoordinate('a', 4), b)
+	pawn.Move(utils.NewCoordinate('a', 5), b)
+	pawn.Move(utils.NewCoordinate('a', 6), b)
+	pawn.CalculateLegalMoves(b)
+	got := pawn.LegalMoves()
+	fmt.Println(got)
 }
