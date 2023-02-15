@@ -1,7 +1,6 @@
 package piece_test
 
 import (
-	"fmt"
 	"reflect"
 	"testing"
 
@@ -12,7 +11,6 @@ import (
 func TestMovement(t *testing.T) {
 	b := board.New()
 	state := b.State()
-	fmt.Println(b.StateStr())
 
 	a4 := state[utils.NewCoordinate('a', 4)]
 
@@ -20,7 +18,6 @@ func TestMovement(t *testing.T) {
 	pawn.Move(utils.NewCoordinate('a', 4), b)
 
 	newstate := b.State()
-	fmt.Println(b.StateStr())
 	newa4 := newstate[utils.NewCoordinate('a', 4)]
 	newa2 := newstate[utils.NewCoordinate('a', 2)]
 
@@ -53,13 +50,24 @@ func TestCalculateLegalMoves(t *testing.T) {
 	}
 }
 
-func TestKillPiece(t *testing.T) {
+func TestCapturePiece(t *testing.T) {
 	b := board.New()
-	pawn := b.PieceAt(utils.NewCoordinate('a', 2))
-	pawn.Move(utils.NewCoordinate('a', 4), b)
-	pawn.Move(utils.NewCoordinate('a', 5), b)
-	pawn.Move(utils.NewCoordinate('a', 6), b)
-	pawn.CalculateLegalMoves(b)
-	got := pawn.LegalMoves()
-	fmt.Println(got)
+
+	p1 := b.PieceAt(utils.NewCoordinate('a', 2))
+	p2 := b.PieceAt(utils.NewCoordinate('b', 7))
+
+	p1.Move(utils.NewCoordinate('a', 4), b)
+	p1.Move(utils.NewCoordinate('a', 5), b)
+	p1.Move(utils.NewCoordinate('a', 6), b)
+	p1.Move(utils.NewCoordinate('b', 7), b)
+
+	p3 := b.PieceAt(utils.NewCoordinate('b', 7))
+
+	if reflect.DeepEqual(p2, p3) {
+		t.Error("expected white pawn, but got black instead")
+	}
+
+	if !reflect.DeepEqual(p1, p3) {
+		t.Error("expected the same piece but got another")
+	}
 }

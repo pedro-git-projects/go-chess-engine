@@ -1,6 +1,8 @@
 package piece
 
 import (
+	"fmt"
+
 	"github.com/pedro-git-projects/go-chess/src/utils"
 )
 
@@ -73,6 +75,7 @@ func (p *Pawn) CalculateLegalMoves(board board) {
 		position, ok := board.NFoward(p.position, 2)
 		if ok && !board.IsOccupied(position) {
 			r = append(r, position)
+			p.Moved()
 		}
 	}
 
@@ -82,9 +85,6 @@ func (p *Pawn) CalculateLegalMoves(board board) {
 // Move moves the piece to a given square
 // if it is in the legal movement slice
 func (p *Pawn) Move(to utils.Coordinate, board board) {
-	// if p.moved == false {
-	// 	p.moved = true
-	// }
 	p.CalculateLegalMoves(board)
 	if utils.Contains(p.legalMoves, to) {
 		board.MovePiece(to, p)
@@ -92,6 +92,7 @@ func (p *Pawn) Move(to utils.Coordinate, board board) {
 	}
 }
 
+// String retuns the piece name plus its color
 func (p Pawn) String() string {
-	return "pawn"
+	return fmt.Sprintf(ColorString(p.color) + " pawn")
 }
