@@ -47,3 +47,16 @@ func TestCapturePiece(t *testing.T) {
 		t.Errorf("expected different pieces, but got %v and %v", p1, p2)
 	}
 }
+
+func TestInvalidPostion(t *testing.T) {
+	b := board.New()
+	b.MovePiece(utils.NewCoordinate('a', 2), utils.NewCoordinate('a', 4))
+	ok := b.MovePiece(utils.NewCoordinate('a', 4), utils.NewCoordinate('a', 2))
+	if ok {
+		t.Error("Expected false, but got true")
+	}
+	ok = b.MovePiece(utils.NewCoordinate('a', 4), utils.NewCoordinate('b', 5))
+	if ok {
+		t.Error("Expected false, but got true")
+	}
+}
