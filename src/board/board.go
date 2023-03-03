@@ -324,10 +324,32 @@ func (b Board) FirstFoward(position utils.Coordinate) (foward utils.Coordinate, 
 	return utils.Coordinate{}, false
 }
 
+// FirstBackward returns the next square behind the current piece if it is white, the first foward if it is black
+// it returns an empty coordinate object and a false flag if it fails.
+func (b Board) FirstBackward(position utils.Coordinate) (backward utils.Coordinate, ok bool) {
+	next := position.Second - 1
+	if next <= 8 {
+		return utils.NewCoordinate(position.First, next), true
+	}
+	return utils.Coordinate{}, false
+
+}
+
 // NFoward returns the nth square in front of current as well as a true value if it succeeds
 // it returns an empty coordinate and not ok else
 func (b Board) NFoward(position utils.Coordinate, squares int) (foward utils.Coordinate, ok bool) {
 	next := position.Second + squares
+	if next <= 8 {
+		return utils.NewCoordinate(position.First, next), true
+	}
+	return utils.Coordinate{}, false
+}
+
+// NBackward returns the nth square in front of current if the pieces are black, behind if they're white
+// as well as a true value if it succeeds
+// it returns an empty coordinate and not ok else
+func (b Board) NBackward(position utils.Coordinate, squares int) (backward utils.Coordinate, ok bool) {
+	next := position.Second - squares
 	if next <= 8 {
 		return utils.NewCoordinate(position.First, next), true
 	}
@@ -528,14 +550,14 @@ func (b Board) StateStr() string {
 			counter++
 		}
 	}
-
 	return *s
 }
 
 // IsOccupied returns true if the passed coordinate is
 // not nil, false otherwise
 func (b Board) IsOccupied(c utils.Coordinate) bool {
-	if b.state[c] == nil {
+	_, ok := b.state[c].(piece.Empty)
+	if b.state[c] == nil || ok {
 		return false
 	}
 	return true
@@ -549,13 +571,17 @@ func (b Board) PieceAt(c utils.Coordinate) piece.Piece {
 // MovePiece moves clears the current position of a piece in the map
 // and associates the piece as the value of the new coordinate key
 // if the coordinate exist
-func (b *Board) MovePiece(c utils.Coordinate, p piece.Piece) (ok bool) {
-	_, ok = b.state[c]
+func (b *Board) MovePiece(from utils.Coordinate, to utils.Coordinate) (ok bool) {
+	_, ok = b.state[from] // checks if the coordinate has a piece
 	if !ok {
 		return ok
 	}
-	b.state[c] = nil
-	b.state[p.Position()] = nil
-	b.state[c] = p
-	return ok
+	p := b.PieceAt(from) // gets the piece
+	ok = p.Move(to, b)   // updates piece internal state
+	if ok {              // updates game state
+		b.state[from] = piece.Empty{} // clears starting position
+		b.state[to] = p               // updates final boardstate postion
+		return ok
+	}
+	return ok // an invalid move was attempted
 }

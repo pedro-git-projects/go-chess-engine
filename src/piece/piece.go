@@ -8,9 +8,9 @@ import (
 // Piece is an interface with the restrictions a chess piece
 // must satisfy
 type Piece interface {
-	Color() Color
+	Color() color
 	Position() utils.Coordinate
 	LegalMoves() []utils.Coordinate
 	CalculateLegalMoves(board board)
-	Move(to utils.Coordinate, board board)
+	Move(to utils.Coordinate, board board) bool
 }

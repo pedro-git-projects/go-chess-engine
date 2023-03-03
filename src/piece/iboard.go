@@ -16,7 +16,9 @@ type board interface {
 	BackwardRightDiagonal(position utils.Coordinate) []utils.Coordinate
 	NthBackwardRightDiagonal(position utils.Coordinate, squares int) (diag utils.Coordinate, ok bool)
 	FirstFoward(position utils.Coordinate) (foward utils.Coordinate, ok bool)
+	FirstBackward(position utils.Coordinate) (backward utils.Coordinate, ok bool)
 	NFoward(position utils.Coordinate, squares int) (foward utils.Coordinate, ok bool)
+	NBackward(position utils.Coordinate, squares int) (backward utils.Coordinate, ok bool)
 	FowardRightL(position utils.Coordinate) (frl utils.Coordinate, ok bool)
 	FowardLeftL(position utils.Coordinate) (fll utils.Coordinate, ok bool)
 	BackwardRightL(position utils.Coordinate) (brl utils.Coordinate, ok bool)
@@ -28,5 +30,5 @@ type board interface {
 	CalcAllLs(position utils.Coordinate) []utils.Coordinate
 	State() map[utils.Coordinate]Piece
 	IsOccupied(c utils.Coordinate) bool
-	MovePiece(c utils.Coordinate, p Piece) (ok bool)
+	MovePiece(from utils.Coordinate, to utils.Coordinate) (ok bool)
 }
