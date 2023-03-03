@@ -71,7 +71,7 @@ func initilizeBlankSquares() map[utils.Coordinate]piece.Piece {
 	row := 3
 	for row <= 6 {
 		for i := 0; i < 8; i++ {
-			m[utils.NewCoordinate(l.CurrentValue(), row)] = nil
+			m[utils.NewCoordinate(l.CurrentValue(), row)] = piece.Empty{}
 			l.MoveToNext()
 		}
 		row++
