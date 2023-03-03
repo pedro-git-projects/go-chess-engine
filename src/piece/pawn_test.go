@@ -10,27 +10,11 @@ import (
 
 func TestMovement(t *testing.T) {
 	b := board.New()
-	state := b.State()
-
-	a4 := state[utils.NewCoordinate('a', 4)]
-
-	pawn := b.PieceAt(utils.NewCoordinate('a', 2))
-	pawn.Move(utils.NewCoordinate('a', 4), b)
-
-	newstate := b.State()
-	newa4 := newstate[utils.NewCoordinate('a', 4)]
-	newa2 := newstate[utils.NewCoordinate('a', 2)]
-
-	if reflect.DeepEqual(newa4, a4) {
-		t.Errorf("current: %v and original: %v should not be equal", newa4, a4)
-	}
-
-	if reflect.DeepEqual(newa4, nil) {
-		t.Error("piece did not move")
-	}
-
-	if !reflect.DeepEqual(newa2, nil) {
-		t.Error("piece is occuping two spots")
+	p1 := b.PieceAt(utils.NewCoordinate('a', 4))
+	b.MovePiece(utils.NewCoordinate('a', 2), utils.NewCoordinate('a', 4))
+	p2 := b.PieceAt(utils.NewCoordinate('a', 4))
+	if reflect.DeepEqual(p1, p2) {
+		t.Errorf("expected white pawn, got %s", p2)
 	}
 }
 
@@ -53,21 +37,13 @@ func TestCalculateLegalMoves(t *testing.T) {
 func TestCapturePiece(t *testing.T) {
 	b := board.New()
 
-	p1 := b.PieceAt(utils.NewCoordinate('a', 2))
-	p2 := b.PieceAt(utils.NewCoordinate('b', 7))
+	b.MovePiece(utils.NewCoordinate('a', 2), utils.NewCoordinate('a', 4))
+	b.MovePiece(utils.NewCoordinate('b', 7), utils.NewCoordinate('b', 5))
+	p1 := b.PieceAt(utils.NewCoordinate('b', 5))
+	b.MovePiece(utils.NewCoordinate('a', 4), utils.NewCoordinate('b', 5))
+	p2 := b.PieceAt(utils.NewCoordinate('b', 5))
 
-	p1.Move(utils.NewCoordinate('a', 4), b)
-	p1.Move(utils.NewCoordinate('a', 5), b)
-	p1.Move(utils.NewCoordinate('a', 6), b)
-	p1.Move(utils.NewCoordinate('b', 7), b)
-
-	p3 := b.PieceAt(utils.NewCoordinate('b', 7))
-
-	if reflect.DeepEqual(p2, p3) {
-		t.Error("expected white pawn, but got black instead")
-	}
-
-	if !reflect.DeepEqual(p1, p3) {
-		t.Error("expected the same piece but got another")
+	if reflect.DeepEqual(p1, p2) {
+		t.Errorf("expected different pieces, but got %v and %v", p1, p2)
 	}
 }
