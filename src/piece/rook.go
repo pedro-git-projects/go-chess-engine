@@ -51,11 +51,16 @@ func (r *Rook) Moved() {
 func (r *Rook) CalculateLegalMoves(board board) {
 	l := make([]utils.Coordinate, 0)
 
-	if r.color == White {
-
-	}
-
-	if r.color == Black {
+	counter := 1
+	found := true
+	current := utils.Coordinate{}
+	for found {
+		current, found = board.NFoward(r.position, counter)
+		l = append(l, current)
+		if board.IsOccupied(current) {
+			break
+		}
+		counter++
 	}
 
 	r.legalMoves = l

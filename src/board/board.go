@@ -38,13 +38,18 @@ func New() *Board {
 
 // initializeBoard sets up the board state to its default position
 func (b *Board) initializeBoard() {
-	utils.Copy(b.state, initilizeWhitePawns())
-	utils.Copy(b.state, initilizeBlackPawns())
+	utils.Copy(b.state, initializeWhitePawns())
+	utils.Copy(b.state, initializeBlackPawns())
+	utils.Copy(b.state, initializeRooks())
+	utils.Copy(b.state, initializeKnights())
+	utils.Copy(b.state, initializeBishops())
+	utils.Copy(b.state, initializeQueens())
+	utils.Copy(b.state, initializeKings())
 	utils.Copy(b.state, initilizeBlankSquares())
 }
 
 // initilizeWhitePawns sets all white pawns to their default positions
-func initilizeWhitePawns() map[utils.Coordinate]piece.Piece {
+func initializeWhitePawns() map[utils.Coordinate]piece.Piece {
 	m := make(map[utils.Coordinate]piece.Piece)
 	l, _ := utils.NewCoordList('a')
 	for i := 1; i <= 8; i++ {
@@ -55,7 +60,7 @@ func initilizeWhitePawns() map[utils.Coordinate]piece.Piece {
 }
 
 // initilizeBlackPawns sets all white pawns to their default positions
-func initilizeBlackPawns() map[utils.Coordinate]piece.Piece {
+func initializeBlackPawns() map[utils.Coordinate]piece.Piece {
 	m := make(map[utils.Coordinate]piece.Piece)
 	l, _ := utils.NewCoordList('a')
 	for i := 1; i <= 8; i++ {
@@ -65,6 +70,69 @@ func initilizeBlackPawns() map[utils.Coordinate]piece.Piece {
 	return m
 }
 
+// initializeRooks sets all rooks to their starting position
+func initializeRooks() map[utils.Coordinate]piece.Piece {
+	m := make(map[utils.Coordinate]piece.Piece)
+	a1 := utils.NewCoordinate('a', 1)
+	h1 := utils.NewCoordinate('h', 1)
+	a8 := utils.NewCoordinate('a', 8)
+	h8 := utils.NewCoordinate('h', 8)
+	m[a1] = piece.NewRook(piece.White, a1)
+	m[h1] = piece.NewRook(piece.White, h1)
+	m[a8] = piece.NewRook(piece.Black, a8)
+	m[h8] = piece.NewRook(piece.Black, h8)
+	return m
+}
+
+// initializeKnights sets all knights to their starting position
+func initializeKnights() map[utils.Coordinate]piece.Piece {
+	m := make(map[utils.Coordinate]piece.Piece)
+	b1 := utils.NewCoordinate('b', 1)
+	g1 := utils.NewCoordinate('g', 1)
+	b8 := utils.NewCoordinate('b', 8)
+	g8 := utils.NewCoordinate('g', 8)
+	m[b1] = piece.NewKnight(piece.White, b1)
+	m[g1] = piece.NewKnight(piece.White, g1)
+	m[b8] = piece.NewKnight(piece.Black, b8)
+	m[g8] = piece.NewKnight(piece.Black, g8)
+	return m
+}
+
+// initializeBishops sets all knights to their starting position
+func initializeBishops() map[utils.Coordinate]piece.Piece {
+	m := make(map[utils.Coordinate]piece.Piece)
+	c1 := utils.NewCoordinate('c', 1)
+	f1 := utils.NewCoordinate('f', 1)
+	c8 := utils.NewCoordinate('c', 8)
+	f8 := utils.NewCoordinate('f', 8)
+	m[c1] = piece.NewBishop(piece.White, c1)
+	m[f1] = piece.NewBishop(piece.White, f1)
+	m[c8] = piece.NewBishop(piece.Black, c8)
+	m[f8] = piece.NewBishop(piece.Black, f8)
+	return m
+}
+
+// initializeKings sets all kings to their starting position
+func initializeKings() map[utils.Coordinate]piece.Piece {
+	m := make(map[utils.Coordinate]piece.Piece)
+	e1 := utils.NewCoordinate('e', 1)
+	e8 := utils.NewCoordinate('e', 8)
+	m[e1] = piece.NewKing(piece.White, e1)
+	m[e8] = piece.NewKing(piece.Black, e1)
+	return m
+}
+
+// initializeQueens sets all queens to their starting position
+func initializeQueens() map[utils.Coordinate]piece.Piece {
+	m := make(map[utils.Coordinate]piece.Piece)
+	d1 := utils.NewCoordinate('d', 1)
+	d8 := utils.NewCoordinate('d', 8)
+	m[d1] = piece.NewKing(piece.White, d1)
+	m[d8] = piece.NewKing(piece.Black, d1)
+	return m
+}
+
+// initilizeBlankSquares sets the starting empty squares in the chessboard to empty
 func initilizeBlankSquares() map[utils.Coordinate]piece.Piece {
 	m := make(map[utils.Coordinate]piece.Piece)
 	l, _ := utils.NewCircularCoordList('a')
@@ -525,6 +593,7 @@ func (b Board) State() map[utils.Coordinate]piece.Piece {
 	return b.state
 }
 
+// TODO: ROTATE 90 degrees
 // StateStr retuns a string representation of the chessboard
 // in the form of [coord piece]
 func (b Board) StateStr() string {
