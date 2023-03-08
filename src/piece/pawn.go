@@ -39,11 +39,6 @@ func (p Pawn) LegalMoves() []utils.Coordinate {
 	return p.legalMoves
 }
 
-// Moved sets the pawn moved field to true
-func (p *Pawn) Moved() {
-	p.moved = true
-}
-
 // CalculateLegalMoves calculates the possibly empty
 // slice of position the piece can move to
 // given its current position
@@ -78,7 +73,6 @@ func (p *Pawn) CalculateLegalMoves(board board) {
 			position, ok := board.NFoward(p.position, 2)
 			if ok && !board.IsOccupied(position) {
 				r = append(r, position)
-				p.Moved()
 			}
 		}
 	}
@@ -111,7 +105,6 @@ func (p *Pawn) CalculateLegalMoves(board board) {
 			position, ok := board.NBackward(p.position, 2)
 			if ok && !board.IsOccupied(position) {
 				r = append(r, position)
-				p.Moved()
 			}
 		}
 	}
@@ -125,6 +118,9 @@ func (p *Pawn) Move(to utils.Coordinate, board board) bool {
 	p.CalculateLegalMoves(board)
 	if utils.Contains(p.legalMoves, to) {
 		p.position = to
+		if !p.moved {
+			p.moved = true
+		}
 		return true
 	}
 	return false

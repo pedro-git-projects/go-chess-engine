@@ -102,6 +102,9 @@ func (k *King) CalculateLegalMoves(board board) {
 func (k *King) Move(to utils.Coordinate, board board) bool {
 	k.CalculateLegalMoves(board)
 	if utils.Contains(k.legalMoves, to) {
+		if !k.moved {
+			k.moved = true
+		}
 		k.position = to
 		return true
 	}
