@@ -5,6 +5,7 @@ import (
 	"testing"
 
 	"github.com/pedro-git-projects/go-chess/src/board"
+	"github.com/pedro-git-projects/go-chess/src/piece"
 	"github.com/pedro-git-projects/go-chess/src/utils"
 )
 
@@ -38,5 +39,29 @@ func TestRookCalculateLegalMoves(t *testing.T) {
 	}
 	if !reflect.DeepEqual(got, expect) {
 		t.Errorf("Expected %v but got %v", expect, got)
+	}
+}
+
+func TestWhiteRookCaputre(t *testing.T) {
+	b := board.New()
+	b.MovePiece(utils.NewCoordinate('a', 2), utils.NewCoordinate('a', 4))
+	b.MovePiece(utils.NewCoordinate('a', 1), utils.NewCoordinate('a', 3))
+	b.MovePiece(utils.NewCoordinate('a', 3), utils.NewCoordinate('c', 3))
+	b.MovePiece(utils.NewCoordinate('c', 3), utils.NewCoordinate('c', 7))
+	got := b.PieceAt(utils.NewCoordinate('c', 7))
+	if _, ok := got.(*piece.Rook); !ok {
+		t.Errorf("Expected rook but got %v", got)
+	}
+}
+
+func TestBlackRookCapture(t *testing.T) {
+	b := board.New()
+	b.MovePiece(utils.NewCoordinate('a', 7), utils.NewCoordinate('a', 5))
+	b.MovePiece(utils.NewCoordinate('a', 8), utils.NewCoordinate('a', 6))
+	b.MovePiece(utils.NewCoordinate('a', 6), utils.NewCoordinate('c', 6))
+	b.MovePiece(utils.NewCoordinate('c', 6), utils.NewCoordinate('c', 2))
+	got := b.PieceAt(utils.NewCoordinate('c', 2))
+	if _, ok := got.(*piece.Rook); !ok {
+		t.Errorf("Expected rook but got %v", got)
 	}
 }
