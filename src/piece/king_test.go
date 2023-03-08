@@ -32,6 +32,8 @@ func TestKingCalculateLegalMoves(t *testing.T) {
 
 func TestKingMovement(t *testing.T) {
 	b := board.New()
+
+	// white king
 	b.MovePiece(utils.NewCoordinate('f', 2), utils.NewCoordinate('f', 4))
 	ok := b.MovePiece(utils.NewCoordinate('e', 1), utils.NewCoordinate('f', 2))
 	if !ok {
@@ -41,6 +43,18 @@ func TestKingMovement(t *testing.T) {
 	if _, ok := got.(*piece.King); !ok {
 		t.Errorf("Expected king but got %v", got)
 	}
+
+	// black king
+	b.MovePiece(utils.NewCoordinate('f', 7), utils.NewCoordinate('f', 5))
+	ok = b.MovePiece(utils.NewCoordinate('e', 8), utils.NewCoordinate('f', 7))
+	if !ok {
+		t.Error("Expected true but got false")
+	}
+	got = b.PieceAt(utils.NewCoordinate('f', 7))
+	if _, ok := got.(*piece.King); !ok {
+		t.Errorf("Expected king but got %v", got)
+	}
+
 }
 
 func TestKingCapture(t *testing.T) {

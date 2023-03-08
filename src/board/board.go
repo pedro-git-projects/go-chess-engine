@@ -118,7 +118,7 @@ func initializeKings() map[utils.Coordinate]piece.Piece {
 	e1 := utils.NewCoordinate('e', 1)
 	e8 := utils.NewCoordinate('e', 8)
 	m[e1] = piece.NewKing(piece.White, e1)
-	m[e8] = piece.NewKing(piece.Black, e1)
+	m[e8] = piece.NewKing(piece.Black, e8)
 	return m
 }
 
