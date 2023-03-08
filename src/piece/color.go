@@ -5,9 +5,9 @@ type color int
 
 // White and Black are enums representing chess piece colors
 const (
-	White color = iota
+	None color = iota
+	White
 	Black
-	None
 )
 
 // ColorString returns the corresponding color as a string

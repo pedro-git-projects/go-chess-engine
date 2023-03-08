@@ -18,7 +18,7 @@ func TestMovement(t *testing.T) {
 	}
 }
 
-func TestCalculateLegalMoves(t *testing.T) {
+func TestPawnCalculateLegalMoves(t *testing.T) {
 	b := board.New()
 	pawn := b.PieceAt(utils.NewCoordinate('a', 2))
 	pawn.CalculateLegalMoves(b)

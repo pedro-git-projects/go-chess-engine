@@ -62,36 +62,36 @@ func (k *King) SetCheck(c bool) {
 // and mutates the legalMoves field
 func (k *King) CalculateLegalMoves(board board) {
 	l := make([]utils.Coordinate, 0)
-	p0, ok := board.FirstFoward(k.position) // f
-	if ok {
+	p0, ok := board.FirstFoward(k.position)
+	if ok && !sameColor(p0, k, board) {
 		l = append(l, p0)
 	}
-	p1, ok := board.FirstBackward(k.position) // b
-	if ok {
+	p1, ok := board.FirstBackward(k.position)
+	if ok && !sameColor(p1, k, board) {
 		l = append(l, p1)
 	}
-	p2, ok := board.NthBackwardLeftDiagonal(k.position, 1) // d1
-	if ok {
+	p2, ok := board.NthBackwardLeftDiagonal(k.position, 1)
+	if ok && !sameColor(p2, k, board) {
 		l = append(l, p2)
 	}
-	p3, ok := board.NthBackwardRightDiagonal(k.position, 1) // d2
-	if ok {
+	p3, ok := board.NthBackwardRightDiagonal(k.position, 1)
+	if ok && !sameColor(p3, k, board) {
 		l = append(l, p3)
 	}
-	p4, ok := board.NthFowardLeftDiagonal(k.position, 1) // d3
-	if ok {
+	p4, ok := board.NthFowardLeftDiagonal(k.position, 1)
+	if ok && !sameColor(p4, k, board) {
 		l = append(l, p4)
 	}
-	p5, ok := board.NthFowardRightDiagonal(k.position, 1) // d4
-	if ok {
+	p5, ok := board.NthFowardRightDiagonal(k.position, 1)
+	if ok && !sameColor(p5, k, board) {
 		l = append(l, p5)
 	}
-	p6, ok := board.NLeft(k.position, 1) // l
-	if ok {
+	p6, ok := board.NLeft(k.position, 1)
+	if ok && !sameColor(p6, k, board) {
 		l = append(l, p6)
 	}
-	p7, ok := board.NRight(k.position, 1) // r
-	if ok {
+	p7, ok := board.NRight(k.position, 1)
+	if ok && !sameColor(p7, k, board) {
 		l = append(l, p7)
 	}
 	k.legalMoves = l

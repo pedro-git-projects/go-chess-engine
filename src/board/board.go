@@ -430,7 +430,7 @@ func (b Board) FirstFoward(position utils.Coordinate) (foward utils.Coordinate, 
 // it returns an empty coordinate object and a false flag if it fails.
 func (b Board) FirstBackward(position utils.Coordinate) (backward utils.Coordinate, ok bool) {
 	next := position.Second - 1
-	if next <= 8 {
+	if next <= 8 && next >= 1 {
 		return utils.NewCoordinate(position.First, next), true
 	}
 	return utils.Coordinate{}, false
@@ -441,7 +441,7 @@ func (b Board) FirstBackward(position utils.Coordinate) (backward utils.Coordina
 // it returns an empty coordinate and not ok else
 func (b Board) NFoward(position utils.Coordinate, squares int) (foward utils.Coordinate, ok bool) {
 	next := position.Second + squares
-	if next <= 8 {
+	if next <= 8 && next >= 1 {
 		return utils.NewCoordinate(position.First, next), true
 	}
 	return utils.Coordinate{}, false
