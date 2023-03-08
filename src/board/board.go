@@ -128,7 +128,7 @@ func initializeQueens() map[utils.Coordinate]piece.Piece {
 	d1 := utils.NewCoordinate('d', 1)
 	d8 := utils.NewCoordinate('d', 8)
 	m[d1] = piece.NewKing(piece.White, d1)
-	m[d8] = piece.NewKing(piece.Black, d1)
+	m[d8] = piece.NewKing(piece.Black, d8)
 	return m
 }
 
@@ -452,7 +452,7 @@ func (b Board) NFoward(position utils.Coordinate, squares int) (foward utils.Coo
 // it returns an empty coordinate and not ok else
 func (b Board) NBackward(position utils.Coordinate, squares int) (backward utils.Coordinate, ok bool) {
 	next := position.Second - squares
-	if next <= 8 {
+	if next <= 8 && next >= 1 {
 		return utils.NewCoordinate(position.First, next), true
 	}
 	return utils.Coordinate{}, false
