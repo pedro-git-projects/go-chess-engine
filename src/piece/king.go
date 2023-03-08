@@ -63,12 +63,12 @@ func (k *King) SetCheck(c bool) {
 func (k *King) CalculateLegalMoves(board board) {
 	l := make([]utils.Coordinate, 0)
 
-	if k.color == White {
-
-	}
-
-	if k.color == Black {
-	}
+	// p0, ok := board.FirstFoward(k.position)              // f
+	// p1, ok := board.FirstBackward(k.position)            // b
+	// p2, ok := board.NthBackwardLeftDiagonal(k.position)  // d1
+	// p3, ok := board.NthBackwardRightDiagonal(k.position) // d2
+	// p4, ok := board.NthFowardLeftDiagonal(k.position)    // d3
+	// p5, ok := board.NthFowardRightDiagonal(k.position)   // d4
 
 	k.legalMoves = l
 }

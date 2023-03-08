@@ -50,17 +50,19 @@ func (r *Rook) Moved() {
 // and mutates the legalMoves field
 func (r *Rook) CalculateLegalMoves(board board) {
 	l := make([]utils.Coordinate, 0)
-
-	counter := 1
-	found := true
-	current := utils.Coordinate{}
-	for found {
-		current, found = board.NFoward(r.position, counter)
-		l = append(l, current)
-		if board.IsOccupied(current) {
-			break
+	col := board.FilterByCol(r.position.First)
+	for _, pos := range col {
+		for !board.IsOccupied(pos) {
+			l = append(l, pos)
 		}
-		counter++
+	}
+	row := board.FilterByRow(r.position.Second)
+	for i, pos := range row {
+		for !board.IsOccupied(pos) {
+			l = append(l, pos)
+		}
+		l = append(l, row[i+1])
+		break
 	}
 
 	r.legalMoves = l

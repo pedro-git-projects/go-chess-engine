@@ -214,6 +214,40 @@ func (b Board) FowardRightDiagonal(position utils.Coordinate) []utils.Coordinate
 	return result
 }
 
+// NLeft returns the nth leftmost postion with respect to a given board coordinate
+func (b Board) NLeft(position utils.Coordinate, squares int) (square utils.Coordinate, ok bool) {
+	y, _ := utils.NewCoordList(position.First)
+	x := position.Second
+	for i := 0; i < squares; i++ {
+		if y.Current() == nil {
+			return utils.Coordinate{}, false
+		}
+		y.MoveToPrev()
+	}
+	nextLeft := utils.NewCoordinate(y.CurrentValue(), x)
+	if !b.Find(nextLeft) {
+		return utils.Coordinate{}, false
+	}
+	return nextLeft, true
+}
+
+// NRight returns the nth rightmost postion with respect to a given board coordinate
+func (b Board) NRight(position utils.Coordinate, squares int) (square utils.Coordinate, ok bool) {
+	y, _ := utils.NewCoordList(position.First)
+	x := position.Second
+	for i := 0; i < squares; i++ {
+		if y.Current() == nil {
+			return utils.Coordinate{}, false
+		}
+		y.MoveToNext()
+	}
+	nextRight := utils.NewCoordinate(y.CurrentValue(), x)
+	if !b.Find(nextRight) {
+		return utils.Coordinate{}, false
+	}
+	return nextRight, true
+}
+
 // NthFowardRightDiagonal returns the postion of the nth square in the diagonal right of the current position
 func (b Board) NthFowardRightDiagonal(position utils.Coordinate, squares int) (diag utils.Coordinate, ok bool) {
 	y, _ := utils.NewCoordList(position.First)

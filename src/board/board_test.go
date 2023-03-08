@@ -361,3 +361,37 @@ func TestNthBackwardRightDiagonal(t *testing.T) {
 		t.Errorf("expected %t but got %t", false, ok)
 	}
 }
+
+func TestNLeft(t *testing.T) {
+	board := board.New()
+	square, ok := board.NLeft(utils.NewCoordinate('c', 1), 2)
+	if !ok {
+		t.Error("Expected true but got false")
+	}
+	expect := utils.NewCoordinate('a', 1)
+	if !reflect.DeepEqual(square, expect) {
+		t.Errorf("Expected %v but got %v", expect, square)
+	}
+
+	square, ok = board.NLeft(utils.NewCoordinate('a', 1), 2)
+	if ok {
+		t.Error("Expected false but got true")
+	}
+}
+
+func TestNRight(t *testing.T) {
+	board := board.New()
+	square, ok := board.NRight(utils.NewCoordinate('c', 1), 2)
+	if !ok {
+		t.Error("Expected true but got false")
+	}
+	expect := utils.NewCoordinate('e', 1)
+	if !reflect.DeepEqual(square, expect) {
+		t.Errorf("Expected %v but got %v", expect, square)
+	}
+
+	square, ok = board.NRight(utils.NewCoordinate('g', 1), 2)
+	if ok {
+		t.Error("Expected false but got true")
+	}
+}

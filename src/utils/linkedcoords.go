@@ -18,8 +18,8 @@ type LinkedCoords struct {
 
 // NewCircularCoordList creates a new circular linked list of chess
 // letter coordinates starting at the intial letter parameter
-func NewCoordList(initial rune) (*CircularLinkedCoords, error) {
-	clc := CircularLinkedCoords{
+func NewCoordList(initial rune) (*LinkedCoords, error) {
+	clc := LinkedCoords{
 		a: NewNode('a'),
 		b: NewNode('b'),
 		c: NewNode('c'),
@@ -97,12 +97,16 @@ func (c LinkedCoords) CurrentValue() rune {
 	return *new(rune)
 }
 
+func (c *LinkedCoords) Current() *Node {
+	return c.current
+}
+
 // Next moves the current to the next node
 func (c *LinkedCoords) MoveToNext() {
 	c.current = c.current.next
 }
 
-// Next moves the current to the next node
+// Next moves the current to the previous node
 func (c *LinkedCoords) MoveToPrev() {
 	c.current = c.current.previous
 }
