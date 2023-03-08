@@ -60,3 +60,12 @@ func TestInvalidPostion(t *testing.T) {
 		t.Error("Expected false, but got true")
 	}
 }
+
+func TestCaptureSameColor(t *testing.T) {
+	b := board.New()
+	b.MovePiece(utils.NewCoordinate('c', 2), utils.NewCoordinate('c', 3))
+	ok := b.MovePiece(utils.NewCoordinate('b', 2), utils.NewCoordinate('c', 3))
+	if ok {
+		t.Error("Self capture")
+	}
+}

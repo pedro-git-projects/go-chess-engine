@@ -62,14 +62,38 @@ func (k *King) SetCheck(c bool) {
 // and mutates the legalMoves field
 func (k *King) CalculateLegalMoves(board board) {
 	l := make([]utils.Coordinate, 0)
-
-	// p0, ok := board.FirstFoward(k.position)              // f
-	// p1, ok := board.FirstBackward(k.position)            // b
-	// p2, ok := board.NthBackwardLeftDiagonal(k.position)  // d1
-	// p3, ok := board.NthBackwardRightDiagonal(k.position) // d2
-	// p4, ok := board.NthFowardLeftDiagonal(k.position)    // d3
-	// p5, ok := board.NthFowardRightDiagonal(k.position)   // d4
-
+	p0, ok := board.FirstFoward(k.position) // f
+	if ok {
+		l = append(l, p0)
+	}
+	p1, ok := board.FirstBackward(k.position) // b
+	if ok {
+		l = append(l, p1)
+	}
+	p2, ok := board.NthBackwardLeftDiagonal(k.position, 1) // d1
+	if ok {
+		l = append(l, p2)
+	}
+	p3, ok := board.NthBackwardRightDiagonal(k.position, 1) // d2
+	if ok {
+		l = append(l, p3)
+	}
+	p4, ok := board.NthFowardLeftDiagonal(k.position, 1) // d3
+	if ok {
+		l = append(l, p4)
+	}
+	p5, ok := board.NthFowardRightDiagonal(k.position, 1) // d4
+	if ok {
+		l = append(l, p5)
+	}
+	p6, ok := board.NLeft(k.position, 1) // l
+	if ok {
+		l = append(l, p6)
+	}
+	p7, ok := board.NRight(k.position, 1) // r
+	if ok {
+		l = append(l, p7)
+	}
 	k.legalMoves = l
 }
 

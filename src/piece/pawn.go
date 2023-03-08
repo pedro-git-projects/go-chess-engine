@@ -50,7 +50,6 @@ func (p *Pawn) Moved() {
 // and mutates the legalMoves field
 func (p *Pawn) CalculateLegalMoves(board board) {
 	r := make([]utils.Coordinate, 0)
-
 	if p.color == White {
 		// walk foward
 		position, ok := board.FirstFoward(p.position)
@@ -63,14 +62,14 @@ func (p *Pawn) CalculateLegalMoves(board board) {
 
 		// piece capture
 		lDiagonal, ok := board.NthFowardRightDiagonal(p.position, 1)
-		if board.IsOccupied(lDiagonal) && ok {
+		if board.IsOccupied(lDiagonal) && ok && !sameColor(lDiagonal, p, board) {
 			r = append(r, lDiagonal)
 
 		}
 
 		// piece capture
 		rDiagonal, ok := board.NthBackwardLeftDiagonal(p.position, 1)
-		if board.IsOccupied(rDiagonal) && ok {
+		if board.IsOccupied(rDiagonal) && ok && !sameColor(rDiagonal, p, board) {
 			r = append(r, rDiagonal)
 		}
 
@@ -96,14 +95,14 @@ func (p *Pawn) CalculateLegalMoves(board board) {
 
 		// piece capture
 		lDiagonal, ok := board.NthBackwardRightDiagonal(p.position, 1)
-		if board.IsOccupied(lDiagonal) && ok {
+		if board.IsOccupied(lDiagonal) && ok && !sameColor(lDiagonal, p, board) {
 			r = append(r, lDiagonal)
 
 		}
 
 		// piece capture
 		rDiagonal, ok := board.NthBackwardLeftDiagonal(p.position, 1)
-		if board.IsOccupied(rDiagonal) && ok {
+		if board.IsOccupied(rDiagonal) && ok && !sameColor(rDiagonal, p, board) {
 			r = append(r, rDiagonal)
 		}
 

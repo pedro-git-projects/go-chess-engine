@@ -5,9 +5,12 @@ import "github.com/pedro-git-projects/go-chess/src/utils"
 // Interface to break dependency cycle
 type board interface {
 	Find(c utils.Coordinate) bool
+	PieceAt(c utils.Coordinate) Piece
 	FilterByCol(col rune) []utils.Coordinate
 	FilterByRow(row int) []utils.Coordinate
 	FowardRightDiagonal(position utils.Coordinate) []utils.Coordinate
+	NLeft(position utils.Coordinate, squares int) (square utils.Coordinate, ok bool)
+	NRight(position utils.Coordinate, squares int) (square utils.Coordinate, ok bool)
 	NthFowardRightDiagonal(position utils.Coordinate, squares int) (diag utils.Coordinate, ok bool)
 	FowardLeftDiagonal(position utils.Coordinate) []utils.Coordinate
 	NthFowardLeftDiagonal(position utils.Coordinate, squares int) (diag utils.Coordinate, ok bool)
