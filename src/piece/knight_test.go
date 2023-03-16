@@ -5,6 +5,7 @@ import (
 	"testing"
 
 	"github.com/pedro-git-projects/go-chess/src/board"
+	"github.com/pedro-git-projects/go-chess/src/piece"
 	"github.com/pedro-git-projects/go-chess/src/utils"
 )
 
@@ -33,4 +34,16 @@ func TestKnightCalculateLegalMovements(t *testing.T) {
 	if !reflect.DeepEqual(got, expect) {
 		t.Errorf("expected %v but got %v", expect, got)
 	}
+}
+
+func TestKnightCapture(t *testing.T) {
+	b := board.New()
+	b.MovePiece(utils.NewCoordinate('b', 1), utils.NewCoordinate('a', 3))
+	b.MovePiece(utils.NewCoordinate('b', 7), utils.NewCoordinate('b', 5))
+	b.MovePiece(utils.NewCoordinate('a', 3), utils.NewCoordinate('b', 5))
+	k := b.PieceAt(utils.NewCoordinate('b', 5))
+	if _, ok := k.(*piece.Knight); !ok {
+		t.Errorf("Expected knight but got %T\n", reflect.TypeOf(k))
+	}
+
 }
