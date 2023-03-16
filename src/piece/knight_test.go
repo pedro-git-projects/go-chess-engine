@@ -45,5 +45,4 @@ func TestKnightCapture(t *testing.T) {
 	if _, ok := k.(*piece.Knight); !ok {
 		t.Errorf("Expected knight but got %T\n", reflect.TypeOf(k))
 	}
-
 }
