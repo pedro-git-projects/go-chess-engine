@@ -97,6 +97,20 @@ func (c LinkedCoords) CurrentValue() rune {
 	return *new(rune)
 }
 
+func (c LinkedCoords) IsNextNil() bool {
+	if c.current.next == nil {
+		return true
+	}
+	return false
+}
+
+func (c LinkedCoords) IsPrevNil() bool {
+	if c.current.previous == nil {
+		return true
+	}
+	return false
+}
+
 func (c *LinkedCoords) Current() *Node {
 	return c.current
 }

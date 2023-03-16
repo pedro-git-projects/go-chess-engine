@@ -42,15 +42,13 @@ func (k Knight) LegalMoves() []utils.Coordinate {
 // given its current position
 // and mutates the legalMoves field
 func (k *Knight) CalculateLegalMoves(board board) {
-	l := make([]utils.Coordinate, 0)
-
-	if k.color == White {
-
+	l := []utils.Coordinate{}
+	temp := board.CalcAllLs(k.position)
+	for _, v := range temp {
+		if !sameColor(v, k, board) {
+			l = append(l, v)
+		}
 	}
-
-	if k.color == Black {
-	}
-
 	k.legalMoves = l
 }
 

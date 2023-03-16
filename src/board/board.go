@@ -463,7 +463,13 @@ func (b Board) NBackward(position utils.Coordinate, squares int) (backward utils
 // else it returns a zeroed coordinate and false
 func (b Board) FowardRightL(position utils.Coordinate) (frl utils.Coordinate, ok bool) {
 	y, _ := utils.NewCoordList(position.First)
+	if y.IsNextNil() {
+		return
+	}
 	y.MoveToNext()
+	if y.Current() == nil {
+		return
+	}
 	x := position.Second + 2
 	nextL := utils.NewCoordinate(y.CurrentValue(), x)
 
@@ -478,10 +484,15 @@ func (b Board) FowardRightL(position utils.Coordinate) (frl utils.Coordinate, ok
 // else it returns a zeroed coordinate and false
 func (b Board) FowardLeftL(position utils.Coordinate) (fll utils.Coordinate, ok bool) {
 	y, _ := utils.NewCoordList(position.First)
+	if y.IsPrevNil() {
+		return
+	}
 	y.MoveToPrev()
+	if y.Current() == nil {
+		return
+	}
 	x := position.Second + 2
 	nextL := utils.NewCoordinate(y.CurrentValue(), x)
-
 	if b.Find(nextL) {
 		return nextL, true
 	}
@@ -493,7 +504,13 @@ func (b Board) FowardLeftL(position utils.Coordinate) (fll utils.Coordinate, ok 
 // else it returns a zeroed coordinate and false
 func (b Board) BackwardRightL(position utils.Coordinate) (brl utils.Coordinate, ok bool) {
 	y, _ := utils.NewCoordList(position.First)
+	if y.IsNextNil() {
+		return
+	}
 	y.MoveToNext()
+	if y.Current() == nil {
+		return
+	}
 	x := position.Second - 2
 	nextL := utils.NewCoordinate(y.CurrentValue(), x)
 
@@ -508,7 +525,13 @@ func (b Board) BackwardRightL(position utils.Coordinate) (brl utils.Coordinate, 
 // else it returns a zeroed coordinate and false
 func (b Board) BackwardLeftL(position utils.Coordinate) (brl utils.Coordinate, ok bool) {
 	y, _ := utils.NewCoordList(position.First)
+	if y.IsPrevNil() {
+		return
+	}
 	y.MoveToPrev()
+	if y.Current() == nil {
+		return
+	}
 	x := position.Second - 2
 	nextL := utils.NewCoordinate(y.CurrentValue(), x)
 
@@ -523,8 +546,17 @@ func (b Board) BackwardLeftL(position utils.Coordinate) (brl utils.Coordinate, o
 // else it returns a zeroed coordinate and false
 func (b Board) RightDownLateralL(position utils.Coordinate) (rdll utils.Coordinate, ok bool) {
 	y, _ := utils.NewCoordList(position.First)
+	if y.IsNextNil() {
+		return
+	}
 	y.MoveToNext()
+	if y.IsNextNil() {
+		return
+	}
 	y.MoveToNext()
+	if y.Current() == nil {
+		return
+	}
 	x := position.Second - 1
 	nextL := utils.NewCoordinate(y.CurrentValue(), x)
 
@@ -539,8 +571,17 @@ func (b Board) RightDownLateralL(position utils.Coordinate) (rdll utils.Coordina
 // else it returns a zeroed coordinate and false
 func (b Board) LeftDownLateralL(position utils.Coordinate) (ldll utils.Coordinate, ok bool) {
 	y, _ := utils.NewCoordList(position.First)
+	if y.IsPrevNil() {
+		return
+	}
 	y.MoveToPrev()
+	if y.IsPrevNil() {
+		return
+	}
 	y.MoveToPrev()
+	if y.Current() == nil {
+		return
+	}
 	x := position.Second - 1
 	nextL := utils.NewCoordinate(y.CurrentValue(), x)
 
@@ -555,8 +596,17 @@ func (b Board) LeftDownLateralL(position utils.Coordinate) (ldll utils.Coordinat
 // else it returns a zeroed coordinate and false
 func (b Board) LeftUpLateralL(position utils.Coordinate) (lull utils.Coordinate, ok bool) {
 	y, _ := utils.NewCoordList(position.First)
+	if y.IsPrevNil() {
+		return
+	}
 	y.MoveToPrev()
+	if y.IsPrevNil() {
+		return
+	}
 	y.MoveToPrev()
+	if y.Current() == nil {
+		return
+	}
 	x := position.Second + 1
 	nextL := utils.NewCoordinate(y.CurrentValue(), x)
 
@@ -571,8 +621,18 @@ func (b Board) LeftUpLateralL(position utils.Coordinate) (lull utils.Coordinate,
 // else it returns a zeroed coordinate and false
 func (b Board) RightUpLateralL(position utils.Coordinate) (rull utils.Coordinate, ok bool) {
 	y, _ := utils.NewCoordList(position.First)
+
+	if y.IsNextNil() {
+		return
+	}
 	y.MoveToNext()
+	if y.IsNextNil() {
+		return
+	}
 	y.MoveToNext()
+	if y.Current() == nil {
+		return
+	}
 	x := position.Second + 1
 	nextL := utils.NewCoordinate(y.CurrentValue(), x)
 
