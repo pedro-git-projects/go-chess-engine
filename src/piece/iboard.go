@@ -10,6 +10,8 @@ type board interface {
 	FilterByRow(row int) []utils.Coordinate
 	FowardRightDiagonal(position utils.Coordinate) []utils.Coordinate
 	NLeft(position utils.Coordinate, squares int) (square utils.Coordinate, ok bool)
+	NthInCol(position utils.Coordinate, squares int) (result utils.Coordinate, ok bool)
+	NthInRow(position utils.Coordinate, squares int) (result utils.Coordinate, ok bool)
 	NRight(position utils.Coordinate, squares int) (square utils.Coordinate, ok bool)
 	NthFowardRightDiagonal(position utils.Coordinate, squares int) (diag utils.Coordinate, ok bool)
 	FowardLeftDiagonal(position utils.Coordinate) []utils.Coordinate

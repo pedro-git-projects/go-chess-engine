@@ -127,8 +127,8 @@ func initializeQueens() map[utils.Coordinate]piece.Piece {
 	m := make(map[utils.Coordinate]piece.Piece)
 	d1 := utils.NewCoordinate('d', 1)
 	d8 := utils.NewCoordinate('d', 8)
-	m[d1] = piece.NewKing(piece.White, d1)
-	m[d8] = piece.NewKing(piece.Black, d8)
+	m[d1] = piece.NewQueen(piece.White, d1)
+	m[d8] = piece.NewQueen(piece.Black, d8)
 	return m
 }
 
@@ -180,7 +180,58 @@ func (b Board) FilterByCol(col rune) []utils.Coordinate {
 	return result
 }
 
-// FilterByCol returns the column corresponding
+// TODO: test
+// NthInCol
+func (b Board) NthInCol(position utils.Coordinate, squares int) (result utils.Coordinate, ok bool) {
+	y, _ := utils.NewCoordList(position.First)
+	if y.IsNextNil() {
+		return
+	}
+	y.MoveToNext()
+	x := position.Second
+	nextCol := utils.NewCoordinate(y.CurrentValue(), x)
+	if !b.Find(nextCol) {
+		return utils.Coordinate{}, false
+	}
+	for i := 0; i < squares-1; i++ {
+		if !b.Find(nextCol) {
+			return utils.Coordinate{}, false
+		}
+		if y.IsNextNil() {
+			return
+		}
+		y.MoveToNext()
+		nextCol = utils.NewCoordinate(y.CurrentValue(), x)
+	}
+
+	if !b.Find(nextCol) {
+		return utils.Coordinate{}, false
+	}
+	return nextCol, true
+}
+
+func (b Board) NthInRow(position utils.Coordinate, squares int) (result utils.Coordinate, ok bool) {
+	y, _ := utils.NewCoordList(position.First)
+	x := position.Second
+	x++
+	nextRow := utils.NewCoordinate(y.CurrentValue(), x)
+	if !b.Find(nextRow) {
+		return utils.Coordinate{}, false
+	}
+	for i := 0; i < squares-1; i++ {
+		if !b.Find(nextRow) {
+			return utils.Coordinate{}, false
+		}
+		x++
+		nextRow = utils.NewCoordinate(y.CurrentValue(), x)
+	}
+	if !b.Find(nextRow) {
+		return utils.Coordinate{}, false
+	}
+	return nextRow, true
+}
+
+// FilterByRow returns the column corresponding
 // to the number coordinate passed
 func (b Board) FilterByRow(row int) []utils.Coordinate {
 	result := make([]utils.Coordinate, 0)
