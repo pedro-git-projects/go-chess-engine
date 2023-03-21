@@ -1,6 +1,7 @@
 package board_test
 
 import (
+	"fmt"
 	"reflect"
 	"testing"
 
@@ -394,4 +395,10 @@ func TestNRight(t *testing.T) {
 	if ok {
 		t.Error("Expected false but got true")
 	}
+}
+
+func TestNthInCol(t *testing.T) {
+	b := board.New()
+	got, err := b.NthInCol(utils.NewCoordinate('a', 1), 1)
+	fmt.Println(got, err)
 }

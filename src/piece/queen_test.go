@@ -1,7 +1,6 @@
 package piece_test
 
 import (
-	"fmt"
 	"reflect"
 	"testing"
 
@@ -26,5 +25,26 @@ func TestQueenCalculateLegalMovements(t *testing.T) {
 	b.MovePiece(utils.NewCoordinate('d', 1), utils.NewCoordinate('d', 3))
 	queen = b.PieceAt(utils.NewCoordinate('d', 3))
 	queen.CalculateLegalMoves(b)
-	fmt.Println(queen.LegalMoves())
+	got = queen.LegalMoves()
+	want = []utils.Coordinate{
+		utils.NewCoordinate('d', 2),
+		utils.NewCoordinate('d', 1),
+		utils.NewCoordinate('c', 3),
+		utils.NewCoordinate('b', 3),
+		utils.NewCoordinate('a', 3),
+		utils.NewCoordinate('e', 3),
+		utils.NewCoordinate('f', 3),
+		utils.NewCoordinate('g', 3),
+		utils.NewCoordinate('h', 3),
+		utils.NewCoordinate('c', 4),
+		utils.NewCoordinate('b', 5),
+		utils.NewCoordinate('a', 6),
+		utils.NewCoordinate('e', 4),
+		utils.NewCoordinate('f', 5),
+		utils.NewCoordinate('g', 6),
+		utils.NewCoordinate('h', 7),
+	}
+	if !reflect.DeepEqual(got, want) {
+		t.Errorf("got %v want %v\n", got, want)
+	}
 }
