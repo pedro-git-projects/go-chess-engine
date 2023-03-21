@@ -8,13 +8,13 @@ import (
 
 // the Knight type represents the king piece in a game of chess
 type Knight struct {
-	color      color
+	color      Color
 	position   utils.Coordinate
 	legalMoves []utils.Coordinate
 }
 
 // NewKnight returns a new king instance
-func NewKnight(color color, position utils.Coordinate) *Knight {
+func NewKnight(color Color, position utils.Coordinate) *Knight {
 	return &Knight{
 		color:    color,
 		position: position,
@@ -22,7 +22,7 @@ func NewKnight(color color, position utils.Coordinate) *Knight {
 }
 
 // Color is an accessor for the color field
-func (k Knight) Color() color {
+func (k Knight) Color() Color {
 	return k.color
 }
 

@@ -8,14 +8,14 @@ import (
 
 // the Pawn type represents pawn pieces in a game of chess
 type Pawn struct {
-	color      color
+	color      Color
 	moved      bool
 	position   utils.Coordinate
 	legalMoves []utils.Coordinate
 }
 
 // NewPawn returns a new pawn instance
-func NewPawn(color color, position utils.Coordinate) *Pawn {
+func NewPawn(color Color, position utils.Coordinate) *Pawn {
 	return &Pawn{
 		color:    color,
 		moved:    false,
@@ -24,7 +24,7 @@ func NewPawn(color color, position utils.Coordinate) *Pawn {
 }
 
 // Color is an accessor for the color field
-func (p Pawn) Color() color {
+func (p Pawn) Color() Color {
 	return p.color
 }
 

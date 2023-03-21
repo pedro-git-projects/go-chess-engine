@@ -8,13 +8,13 @@ import (
 
 // the Bishop type represents the bishop piece in a game of chess
 type Bishop struct {
-	color      color
+	color      Color
 	position   utils.Coordinate
 	legalMoves []utils.Coordinate
 }
 
 // NewBishop returns a new king instance
-func NewBishop(color color, position utils.Coordinate) *Bishop {
+func NewBishop(color Color, position utils.Coordinate) *Bishop {
 	return &Bishop{
 		color:    color,
 		position: position,
@@ -22,7 +22,7 @@ func NewBishop(color color, position utils.Coordinate) *Bishop {
 }
 
 // Color is an accessor for the color field
-func (b Bishop) Color() color {
+func (b Bishop) Color() Color {
 	return b.color
 }
 

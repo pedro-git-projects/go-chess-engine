@@ -8,13 +8,13 @@ import (
 
 // the Queen type represents the queen piece in a game of chess
 type Queen struct {
-	color      color
+	color      Color
 	position   utils.Coordinate
 	legalMoves []utils.Coordinate
 }
 
 // NewQueen returns a new queen instance
-func NewQueen(color color, position utils.Coordinate) *Queen {
+func NewQueen(color Color, position utils.Coordinate) *Queen {
 	return &Queen{
 		color:    color,
 		position: position,
@@ -22,7 +22,7 @@ func NewQueen(color color, position utils.Coordinate) *Queen {
 }
 
 // Color is an accessor for the color field
-func (q Queen) Color() color {
+func (q Queen) Color() Color {
 	return q.color
 }
 

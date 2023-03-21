@@ -7,13 +7,13 @@ import "github.com/pedro-git-projects/go-chess/src/utils"
 // avoiding nil pointer derefrences when trying to perform
 // a move operation on an empty board position
 type Empty struct {
-	color      color
+	color      Color
 	moved      bool
 	position   utils.Coordinate
 	legalMoves []utils.Coordinate
 }
 
-func (Empty) Color() color                               { return None }
+func (Empty) Color() Color                               { return None }
 func (Empty) Position() utils.Coordinate                 { return utils.Coordinate{} }
 func (Empty) LegalMoves() []utils.Coordinate             { return make([]utils.Coordinate, 0) }
 func (Empty) CalculateLegalMoves(board board)            {}

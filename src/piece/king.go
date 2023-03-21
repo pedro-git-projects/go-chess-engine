@@ -10,7 +10,7 @@ import (
 
 // the King type represents the king piece in a game of chess
 type King struct {
-	color      color
+	color      Color
 	moved      bool
 	check      bool
 	position   utils.Coordinate
@@ -18,7 +18,7 @@ type King struct {
 }
 
 // NewKing returns a new king instance
-func NewKing(color color, position utils.Coordinate) *King {
+func NewKing(color Color, position utils.Coordinate) *King {
 	return &King{
 		color:    color,
 		moved:    false,
@@ -28,7 +28,7 @@ func NewKing(color color, position utils.Coordinate) *King {
 }
 
 // Color is an accessor for the color field
-func (k King) Color() color {
+func (k King) Color() Color {
 	return k.color
 }
 

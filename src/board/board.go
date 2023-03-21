@@ -692,7 +692,6 @@ func (b Board) State() map[utils.Coordinate]piece.Piece {
 // in the form of [coord piece]
 func (b Board) StateStr() string {
 	s := new(string)
-
 	keys := make([]string, 0)
 	for k := range b.state {
 		keys = append(keys, string(k.First)+fmt.Sprint(k.Second))

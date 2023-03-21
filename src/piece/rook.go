@@ -8,14 +8,14 @@ import (
 
 // the Pawn type represents pawn pieces in a game of chess
 type Rook struct {
-	color      color
+	color      Color
 	moved      bool
 	position   utils.Coordinate
 	legalMoves []utils.Coordinate
 }
 
 // NewPawn returns a new pawn instance
-func NewRook(color color, position utils.Coordinate) *Rook {
+func NewRook(color Color, position utils.Coordinate) *Rook {
 	return &Rook{
 		color:    color,
 		moved:    false,
@@ -24,7 +24,7 @@ func NewRook(color color, position utils.Coordinate) *Rook {
 }
 
 // Color is an accessor for the color field
-func (r Rook) Color() color {
+func (r Rook) Color() Color {
 	return r.color
 }
 
