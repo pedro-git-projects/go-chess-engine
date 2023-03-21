@@ -5,6 +5,7 @@ import (
 	"testing"
 
 	"github.com/pedro-git-projects/go-chess/src/board"
+	"github.com/pedro-git-projects/go-chess/src/piece"
 	"github.com/pedro-git-projects/go-chess/src/utils"
 )
 
@@ -46,5 +47,18 @@ func TestQueenCalculateLegalMovements(t *testing.T) {
 	}
 	if !reflect.DeepEqual(got, want) {
 		t.Errorf("got %v want %v\n", got, want)
+	}
+}
+
+func TestQueenCapture(t *testing.T) {
+	b := board.New()
+	b.MovePiece(utils.NewCoordinate('d', 2), utils.NewCoordinate('d', 4))
+	b.MovePiece(utils.NewCoordinate('d', 7), utils.NewCoordinate('d', 5))
+	b.MovePiece(utils.NewCoordinate('d', 1), utils.NewCoordinate('d', 3))
+	ok := b.MovePiece(utils.NewCoordinate('d', 3), utils.NewCoordinate('h', 7))
+	got := b.PieceAt(utils.NewCoordinate('h', 7))
+	_, isQueen := got.(*piece.Queen)
+	if !ok || !isQueen {
+		t.Errorf("expected queen but got %T\n", got)
 	}
 }
