@@ -16,5 +16,6 @@ Go chess is a chess engine written in Go.
 	- [x] King 
 - [ ] Calculate when the king is in check 
 - [ ] Accept castles 
-- [ ] Handle turns 
-- [ ] Expose API via JSON marshalling 
+- [ ] Implement pawn promotion
+- [x] Handle turns 
+- [x] Expose API via JSON marshalling 
