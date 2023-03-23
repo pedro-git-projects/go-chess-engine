@@ -13,6 +13,8 @@ type Game struct {
 	currentTurn piece.Color
 }
 
+// New returns a pointer to a Game
+// the zero values are fully usable.
 func New() *Game {
 	return &Game{
 		board:       board.New(),
@@ -44,6 +46,12 @@ func (game *Game) MovePiece(from, to utils.Coordinate) {
 	}
 }
 
+// PrintBoard prints the current board state to the os.Stdout
 func (g Game) PrintBoard() {
 	fmt.Println(g.board.StateStr())
+}
+
+// MarshalState returns the current board state as a JSON object
+func (g Game) MarshalState() string {
+	return g.board.Marshal()
 }

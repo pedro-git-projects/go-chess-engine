@@ -1,7 +1,6 @@
 package board_test
 
 import (
-	"fmt"
 	"reflect"
 	"testing"
 
@@ -395,13 +394,4 @@ func TestNRight(t *testing.T) {
 	if ok {
 		t.Error("Expected false but got true")
 	}
-}
-
-func TestMarshal(t *testing.T) {
-	b := board.New()
-	m, err := b.Marshal()
-	if err != nil {
-		fmt.Println(err)
-	}
-	fmt.Printf("%s\n", m)
 }

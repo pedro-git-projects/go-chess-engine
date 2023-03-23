@@ -4,12 +4,11 @@ import (
 	"fmt"
 	"net/http"
 
-	"github.com/pedro-git-projects/go-chess/src/board"
+	"github.com/pedro-git-projects/go-chess/src/game"
 )
 
 func HandleBoard(w http.ResponseWriter, r *http.Request) {
-	b := board.New()
 	w.Header().Add("Content-Type", "application/json")
-	m := b.Marshal()
-	fmt.Fprintln(w, m)
+	s := game.New().MarshalState()
+	fmt.Fprintln(w, s)
 }
