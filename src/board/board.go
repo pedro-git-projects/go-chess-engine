@@ -691,13 +691,12 @@ func (b Board) State() map[utils.Coordinate]piece.Piece {
 // StateStr retuns a string representation of the chessboard
 // in the form of [coord piece]
 func (b Board) StateStr() string {
-	s := new(string)
-	keys := make([]string, 0)
+	s := ""
+	keys := []string{}
 	for k := range b.state {
 		keys = append(keys, string(k.First)+fmt.Sprint(k.Second))
 	}
 	sort.Strings(keys)
-
 	counter := 1
 	for _, k := range keys {
 		coord, err := utils.CoordFromStr(k)
@@ -705,14 +704,40 @@ func (b Board) StateStr() string {
 			fmt.Println(err)
 		}
 		if counter%8 == 0 {
-			*s += fmt.Sprintf("[%v %v]\n", k, b.state[coord])
+			s += fmt.Sprintf("[%v %v]\n", k, b.state[coord])
 			counter++
 		} else {
-			*s += fmt.Sprintf("[%v %v]", k, b.state[coord])
+			s += fmt.Sprintf("[%v %v]", k, b.state[coord])
 			counter++
 		}
 	}
-	return *s
+	return s
+}
+
+func (b Board) Marshal() string {
+	result := ""
+	delimiters := "["
+	keys := []string{}
+	for k := range b.state {
+		keys = append(keys, string(k.First)+fmt.Sprint(k.Second))
+	}
+	sort.Strings(keys)
+	result += delimiters
+	for i, k := range keys {
+		coord, err := utils.CoordFromStr(k)
+		if err != nil {
+			fmt.Println(err)
+		}
+		if i != len(keys)-1 {
+			result += fmt.Sprintf("{%q: %q, %q: %q},", "coordinate", k, "piece", b.state[coord])
+
+		} else {
+			result += fmt.Sprintf("{%q: %q, %q: %q}", "coordinate", k, "piece", b.state[coord])
+		}
+	}
+	delimiters = "]"
+	result += delimiters
+	return result
 }
 
 // IsOccupied returns true if the passed coordinate is

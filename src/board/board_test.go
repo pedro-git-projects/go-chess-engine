@@ -397,8 +397,11 @@ func TestNRight(t *testing.T) {
 	}
 }
 
-func TestNthInCol(t *testing.T) {
+func TestMarshal(t *testing.T) {
 	b := board.New()
-	got, err := b.NthInCol(utils.NewCoordinate('a', 1), 1)
-	fmt.Println(got, err)
+	m, err := b.Marshal()
+	if err != nil {
+		fmt.Println(err)
+	}
+	fmt.Printf("%s\n", m)
 }
