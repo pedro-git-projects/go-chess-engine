@@ -714,6 +714,8 @@ func (b Board) StateStr() string {
 	return s
 }
 
+// Marshal is a function that takes the board state
+// and marshals it into a json string
 func (b Board) Marshal() string {
 	result := ""
 	delimiters := "["
@@ -738,6 +740,11 @@ func (b Board) Marshal() string {
 	delimiters = "]"
 	result += delimiters
 	return result
+}
+
+// TODO
+func (b Board) UnmarshalCoordinate(json string, err error) {
+
 }
 
 // IsOccupied returns true if the passed coordinate is
